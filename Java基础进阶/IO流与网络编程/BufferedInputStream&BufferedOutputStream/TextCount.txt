@@ -1,0 +1,704 @@
+请求异常
+检测到对服务器的数据请求产生了预期之外的异常。请：
+▪ 检查网络连接及 DNS 解析是否正常
+▪ 关闭净网大师、AdBlock 等应用及跨域类插件或将掘金加入白名单
+若以上操作均无效，请  。
+
+掘金
+首页
+沸点
+话题
+小册
+活动
+搜索掘金
+搜索
+
+写文章
+登录
+注册
+将源兵魂lv-2
+2020年05月03日阅读 557
+关注
+🔥基于vue3.0.1 beta搭建仿京东淘宝的电商商城项目！
+前言
+就在前段时间，vue官方发布了3.0.0-beta.1 版本，趁着五一假期有时间，就把之前的一个电商商城的项目，用最新的Composition API拿来改造一下！
+
+👉GitHub地址请访问🔗：github.com/GitHubGanKa…
+
+项目介绍
+vue-jd-h5是一个电商H5页面前端项目，基于Vue 3.0.0-beta.1 + Vant 实现，主要包括首页、分类页面、我的页面、购物车等。
+
+📖本地线下代码vue2.6在分支demo中，使用mockjs数据进行开发，效果图请点击🔗这里
+
+⚠️master分支是线上生产环境代码，因为部分后台接口已经挂了😫，可能无法看到实际效果🔗项目线上地址
+
+📌 本项目还有很多不足之处，如果有想为此做贡献的伙伴，也欢迎给我们提出PR，或者issue ；
+
+🔑 本项目是免费开源的，如果有伙伴想要在次基础上进行二次开发，可以clone或者fork整个仓库，如果能帮助到您，我将感到非常高兴，如果您觉得这个项目不错还请给个start！🙏
+
+搭建步骤
+首先,选择一个文件，将代码clone到本地：
+git clone https://github.com/GitHubGanKai/vue-jd-h5.git 
+复制代码
+查看所有分支：
+gankaideMacBook-Pro:vue-jd-h5 gankai$ git branch -a
+  demo
+  demo_vue3
+  dev
+  feature
+  gh-pages
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/demo
+  remotes/origin/demo_vue3
+  remotes/origin/dev
+  remotes/origin/feature
+  remotes/origin/gh-pages
+  remotes/origin/master
+复制代码
+切换到分支demo_vue3开始进行开发！
+项目的初始化
+💡如果你在安装包的时候速度比较慢，那是因为NPM服务器在国外，这里给大家推荐一个可以随时切换NPM镜像的工具👉NRM，有时候，我们开发的时候，为了加快安装包的安装速度，我们需要切换镜像源为国内的，但是，如果需要发布一些自己的组件到NPM的时候，又要来回切换回来，有了这个我们就方便多了！使用$ npm install -g nrm全局安装，然后，可以使用nrm ls 查看所有镜像：
+
+gankaideMacBook-Pro:~ gankai$ nrm ls
+
+  npm -------- https://registry.npmjs.org/
+* yarn ------- https://registry.yarnpkg.com/
+  cnpm ------- http://r.cnpmjs.org/
+  taobao ----- https://registry.npm.taobao.org/
+  nj --------- https://registry.nodejitsu.com/
+  npmMirror -- https://skimdb.npmjs.com/registry/
+  edunpm ----- http://registry.enpmjs.org/
+复制代码
+如果需要使用淘宝镜像，执行： nrm use taobao 可以随时切换源，当然了还有一个npm包版本管理工具nvm，主要是管理包版本的，如果有兴趣的小伙伴，可以自己去了解一下，这里就不啰嗦了😊！
+
+安装
+进入刚才clone下来的项目根目录，安装@vue/composition-api 体验 vue3 新特性。
+
+npm安装：
+
+npm install @vue/composition-api --save
+复制代码
+yarn安装：
+
+yarn add @vue/composition-api
+复制代码
+CDN
+
+<script src="https://unpkg.com/@vue/composition-api/dist/vue-composition-api.umd.js"></script>
+复制代码
+通过全局变量 window.vueCompositionApi 来使用。
+
+使用
+在使用任何 @vue/composition-api 提供的能力前，必须先通过 Vue.use() 进行安装:
+
+在入口文件main.js中：
+
+import Vue from 'vue';
+import VueCompositionApi from '@vue/composition-api';
+
+Vue.use(VueCompositionApi);
+复制代码
+安装插件后，您就可以使用新的 Composition API 来开发组件了。
+
+⚠️目前vue官方为vue-cli提供了一个插件vue-cli-plugin-vue-next，你也可以直接在项目中直接添加最新的版本！
+
+# in an existing Vue CLI project
+vue add vue-next
+复制代码
+如果有想从零开始体验新版本的小伙伴可以采用这种方法进行安装，由于我们这个项目有依赖第三方库，如果全局安装，整个项目第三方UI库都无法运行！所以我们还是选择采用安装@vue/composition-api来进行体验，从而慢慢过渡到vue3最新版本
+
+Vue 3.0 Composition-API基本特性体验
+setup函数
+setup() 函数是 vue3 中专门为组件提供的新属性，相当于2.x版本中的created函数,之前版本的组件逻辑选项，现在都统一放在这个函数中处理。它为我们使用 vue3 的 Composition API 新特性提供了统一的入口,setup 函数会在相对于2.x来说，会在 beforeCreate 之后、created 之前执行！具体可以参考如下：
+
+vue2.x	vue3
+beforeCreate	setup(替代)
+created	setup(替代)
+beforeMount	onBeforeMount
+mounted	onMounted
+beforeUpdate	onBeforeUpdate
+updated	onUpdated
+beforeDestroy	onBeforeUnmount
+destroyed	onUnmounted
+errorCaptured	onErrorCaptured
+新钩子
+除了2.x生命周期等效项之外，Composition API还提供了以下debug hooks：
+
+onRenderTracked
+onRenderTriggered
+两个钩子都收到DebuggerEvent类似于onTrack和onTrigger观察者的选项：
+
+export default {
+  onRenderTriggered(e) {
+    debugger
+    // inspect which dependency is causing the component to re-render
+  }
+}
+复制代码
+依赖注入
+provide和inject启用类似于2.x provide/inject选项的依赖项注入。两者都只能在setup()当前活动实例期间调用。
+
+import { provide, inject } from '@vue/composition-api'
+
+const ThemeSymbol = Symbol()
+
+const Ancestor = {
+  setup() {
+    provide(ThemeSymbol, 'dark')
+  }
+}
+
+const Descendent = {
+  setup() {
+    const theme = inject(ThemeSymbol, 'light' /* optional default value */)
+    return {
+      theme
+    }
+  }
+}
+复制代码
+inject接受可选的默认值作为第二个参数。如果未提供默认值，并且在Provide上下文中找不到该属性，则inject返回undefined。
+
+注入响应式数据
+
+为了保持提供的值和注入的值之间的响应式，可以使用ref
+
+// 在父组建中
+const themeRef = ref('dark')
+provide(ThemeSymbol, themeRef)
+
+// 组件中
+const theme = inject(ThemeSymbol, ref('light'))
+watchEffect(() => {
+  console.log(`theme set to: ${theme.value}`)
+})
+复制代码
+因为setup函数接收2个形参，第一个是initProps，即父组建传送过来的值！，第二个形参是一个上下文对象
+setupContext，这个对象的主要属性有 ：
+
+attrs: Object    				// 等同 vue 2.x中的 this.$attrs
+emit: ƒ ()       				// 等同 this.$emit()
+isServer: false  				// 是否是服务端渲染
+listeners: Object				// 等同 vue2.x中的this.$listeners
+parent: VueComponent		// 等同 vue2.x中的this.$parent
+refs: Object						// 等同 vue2.x中的this.$refs
+root: Vue								// 这个root是我们在main.js中，使用new Vue()的时候，返回的全局唯一的实例对象，注意别和单文件组建中的this混淆了
+slots: {}								// 等同 vue2.x中的this.$slots
+ssrContext:{}						// 服务端渲染相关
+复制代码
+⚠️注意：在 setup() 函数中无法访问到 this的，不管这个this指的是全局的的vue对象(即：在main.js 中使用new生成的那个全局的vue实例对象)，还是指单文件组建的对象。
+
+但是，如果我们想要访问当前组件的实例对象，那该怎么办呢？我们可以引入getCurrentInstance这个api,返回值就是当前组建的实例！
+
+import { computed, getCurrentInstance } from "@vue/composition-api";
+export default {
+  name: "svg-icon",
+  props: {
+    iconClass: {
+      type: String,
+      required: true
+    },
+    className: {
+      type: String
+    }
+  },
+  setup(initProps,setupContext) { 
+    // ⚠️注意，如果是通过vue add vue-next添加的这个地方需要结构出ctx
+    const ctx = getCurrentInstance();
+    const iconName = computed(() => {
+      return `#icon-${initProps.iconClass}`;
+    });
+    const svgClass = computed(() => {
+      if (initProps.className) {
+        return "svg-icon " + initProps.className;
+      } else {
+        return "svg-icon";
+      }
+    });
+    return {
+      iconName,
+      svgClass
+    };
+  }
+};
+</script>
+
+复制代码
+Ref自动展开（unwrap）
+ref() 函数用来根据给定的值创建一个响应式的数据对象，ref() 函数调用的返回值是一个被包装后的对象（RefImpl），这个对象上只有一个 .value 属性，如果我们在setup函数中，想要访问的对象的值，可以通过.value来获取，但是如果是在<template>模版中，直接访问即可，不需要.value！
+
+import { ref } from '@vue/composition-api'
+
+setup() {
+    const active = ref("");
+    const timeData = ref(36000000);
+    
+     return {
+         active,
+       	 timeData
+     }
+}
+复制代码
+<template>
+  <p>活动状态：{{active}}</p>
+  <p>活动时间：{{timeData}}</p>
+</template>
+复制代码
+⚠️注意：不要将Array放入ref中，数组索引属性无法进行自动展开，也不要使用 Array 直接存取 ref 对象:
+
+const state = reactive({
+  list: [ref(0)],
+});
+// 不会自动展开, 须使用 `.value`
+state.list[0].value === 0; // true
+
+state.list.push(ref(1));
+// 不会自动展开, 须使用 `.value`
+state.list[1].value === 1; // true
+复制代码
+当我们需要操作DOM的时候，比如我们在项目中使用swiper需要获取DOM,那么我们还可以这样👇！
+
+  <div class="swiper-cls">
+      <swiper :options="swiperOption" ref="mySwiper">
+        <swiper-slide v-for="(img ,index) in tabImgs.value" :key="index">
+          <img class="slide_img" @click="handleClick(img.linkUrl)" :src="img.imgUrl" />
+        </swiper-slide>
+      </swiper>
+   </div>
+复制代码
+然后在setup函数中定义一个const mySwiper = ref(null);，之前在vue2.x中，我们是通过this.$refs.mySwiper来获取DOM对象的，现在也可以使用ref函数代替，返回的mySwiper要和template中绑定的ref相同！
+
+import { ref, onMounted } from "@vue/composition-api";
+setup(props, { attrs, slots, parent, root, emit, refs }) {
+	const mySwiper = ref(null);
+  onMounted(() => {
+    // 通过mySwiper.value 即可获取到DOM对象！
+    // 同时也可以使用vue2.x中的refs.mySwiper ，他其实mySwiper.value 是同一个DOM对象！
+    mySwiper.value.swiper.slideTo(3, 1000, false);
+  });
+	return {
+    mySwiper
+  }
+}
+复制代码
+reactive
+reactive() 函数接收一个普通对象，返回一个响应式的数据对象，等价于 vue 2.x 中的 Vue.observable() 函数，vue 3.x 中提供了 reactive() 函数，用来创建响应式的数据对象Observer，ref中我们一般存放的是基本类型数据，如果是引用类型的我们可以使用reactive函数。
+
+当reactive函数中，接收的类型是一个Array数组的时候，我们可以在这个Array外面在用对象包裹一层，然后给对象添加一个属性比如：value（这个属性名你可以自己随便叫什么），他的值就是这个数组！
+
+<script>
+// 使用相关aip之前必须先引入
+import { ref, reactive } from "@vue/composition-api";
+export default {
+  name: "home",
+  setup(props, { attrs, slots, parent, root, emit, refs }) {
+    
+    const active = ref("");
+    const timeData = ref(36000000);
+    // 将tabImgs数组中每个对象都变成响应式的对象 
+    const tabImgs = reactive({
+      value: []
+    });
+    const ball = reactive({
+      show: false,
+      el: ""
+    });
+    return {
+      active,
+      timeData,
+      tabImgs,
+      ...toRefs(ball),
+    };
+  }
+};
+</script>
+复制代码
+那么在template模版中我们想要访问这个数组的时候就是需要使用.value的形式来获取这个数组的值。
+
+<template>
+    <div class="swiper-cls">
+      <swiper :options="swiperOption" ref="mySwiper">
+        <swiper-slide v-for="(img ,index) in tabImgs.value" :key="index">
+          <img class="slide_img" @click="handleClick(img.linkUrl)" :src="img.imgUrl" />
+        </swiper-slide>
+      </swiper>
+    </div>
+</template>
+复制代码
+isRef
+isRef() 用来判断某个值是否为 ref() 创建出来的对象；当需要展开某个可能为 ref() 创建出来的值的时候，可以使用isRef来判断！
+
+import { isRef } from '@vue/composition-api'
+
+setup(){
+	const headerActive = ref(false);
+  // 在setup函数中，如果是响应式的对象，在访问属性的时候，一定要加上.value来访问！
+  const unwrapped = isRef(headerActive) ? headerActive.value : headerActive
+  return {}
+}
+复制代码
+toRefs
+toRefs函数会将响应式对象转换为普通对象，其中返回的对象上的每个属性都是指向原始对象中相应属性的ref，将一个对象上的所有属性转换成响应式的时候，将会非常有用！
+
+import { reactive,toRefs } from '@vue/composition-api'
+setup(){
+  // ball 是一个 Observer
+	 const ball = reactive({
+      show: false,
+      el: ""
+    });
+  // ballToRefs 就是一个普通的Object，但是ballToRefs里面的所有属性都是响应式的（RefImpl）
+  const ballToRefs  = toRefs(ball)
+  // ref和原始属性是“链接的”
+  ball.show = true
+  console.log(ballToRefs.show) // true
+  ballToRefs.show.value = false
+  console.log(ballToRefs.show) // false
+  return {
+    ...ballToRefs    // 将ballToRefs对象展开，我们就可以直接在template模板中直接这样使用这个对象上的所有属性！
+  }
+}
+
+复制代码
+点击添加按钮，小球飞入购物车动画：
+
+<template>  
+  <div class="ballWrap">
+      <transition @before-enter="beforeEnter" @enter="enter" @afterEnter="afterEnter">
+        <!-- 可以直接使用show-->
+        <div class="ball" v-if="show">
+          <li class="inner">
+            <span class="cubeic-add" @click="addToCart($event,item)">
+              <svg-icon class="add-icon" icon-class="add"></svg-icon>
+            </span>
+          </li>
+        </div>
+      </transition>
+   </div>
+</template>
+复制代码
+computed
+computed函数的第一个参数，可以接收一个函数，或者是一个对象！如果是函数默认是getter函数，并为getter返回的值返回一个只读的ref对象。
+
+import { computed } from '@vue/composition-api'
+
+const count = ref(1)
+// computed接收一个函数作为入参
+const plusOne = computed(() => count.value + 1)
+
+console.log(plusOne.value) // 2
+
+plusOne.value++ // 错误，plusOne是只读的！
+复制代码
+或者也可以是个函数，可以使用具有get和set功能的对象来创建可写ref对象。
+
+const count = ref(1)
+// computed接收一个对象作为入参
+const plusOne = computed({
+  get: () => count.value + 1,
+  set: val => {
+    count.value = val - 1
+  }
+})
+
+plusOne.value = 1
+console.log(count.value) // 0
+复制代码
+watch
+watch(source, cb, options?)
+
+该watchAPI与2.x this.$watch（以及相应的watch选项）完全等效。
+
+观察单一来源
+观察者数据源可以是返回值的getter函数，也可以直接是ref：
+
+// watching a getter函数
+const state = reactive({ count: 0 })
+watch(
+  () => state.count, // 返回值的getter函数
+  (count, prevCount,onCleanup) => {
+    /* ... */
+  }
+)
+
+// directly watching a ref
+const count = ref(0)
+watch(
+  count, // 也可以直接是ref
+  (count, prevCount,onCleanup) => {
+  /* ... */
+})
+复制代码
+watch多个来源
+观察者还可以使用数组同时监视多个源：
+
+const me = reactive({ age: 24, name: 'gk' })
+// reactive类型的
+watch(
+  [() => me.age, () => me.name], // 监听reactive多个数据源，可以传入一个数组类型，返回getter函数
+  ([age, name], [oldAge, oldName]) => {
+    console.log(age) // 新的 age 值
+    console.log(name) // 新的 name 值
+    console.log(oldAge) // 旧的 age 值
+    console.log(oldName) // 新的 name 值
+  },
+  // options
+  {
+    lazy: true //默认 在 watch 被创建的时候执行回调函数中的代码，如果lazy为true ，怎创建的时候，不执行！
+  }
+)
+
+setInterval(() => {
+  me.age++
+  me.name = 'oldMe'
+}, 7000000)
+
+// ref类型的
+const work = ref('web')
+const addres = ref('sz')
+watch(
+  [work,address],  // 监听多个ref数据源
+  ([work, addres], [oldwork, oldaddres]) => {
+   //......
+  },
+  {
+    lazy: true 
+  }
+)
+
+复制代码
+watch和组件的生命周期绑定，当组件卸载后，watch也将自动停止。在其他情况下，它返回停止句柄，可以调用该句柄以显式停止观察程序：
+
+// watch 返回一个函数句柄，我们可以决定该watch的停止和开始！
+const stopWatch = watch(
+  [work,address],  // 监听多个ref数据源
+  ([work, addres], [oldwork, oldaddres]) => {
+   //......
+  },
+  {
+    lazy: true 
+  }
+)
+
+// 调用停止函数，清除对work和address的监视
+stopWatch()
+复制代码
+在 watch 中清除无效的异步任务
+<div class="search-con">
+  <svg-icon class="search-icon" icon-class="search"></svg-icon>
+  <input v-focus placeholder="搜索、关键词" v-model="searchText" />
+</div>
+复制代码
+setup(props, { attrs, slots, parent, root, emit, refs }){
+  const CancelToken = root.$http.CancelToken 
+  const source = CancelToken.source() 
+	// 定义响应式数据 keywords
+	const searchText = ref('')
+
+  // 向后台发送异步请求
+	const getSearchResult = searchText => {
+ 	root.$http.post("http://test.happymmall.com/search",{text:searchText}, {
+        cancelToken: source.token
+    }).then(res => {
+    // .....
+    });
+  return source.cancel
+}
+
+// 定义 watch 监听
+watch(
+  searchText,
+  (searchText, oldSearchText, onCleanup) => {
+    // 发送axios请求，并得到取消axios请求的 cancel函数
+    const cancel = getSearchResult(searchText)
+
+    // 若 watch 监听被重复执行了，则会先清除上次未完成的异步请求
+    onCleanup(cancel)
+  },
+  // watch 刚被创建的时候不执行
+  { lazy: true }
+)
+
+  return {
+    searchText
+  }
+}
+复制代码
+最后
+趁着五一假期，有时间可以熟悉以下vue3的新特性，可以用这个项目练练手！但是实际工作中，个人觉得没必要从Vue2.x升级到vue3，以下是个人分析：
+
+vue3新增 Composition API。新的 API 兼容 Vue2.x，只需要在项目中单独引入 @vue/composition-api 这个包就能够解决我们目前 Vue2.x 中存在的一些个别难题比如：如何组织逻辑，以及如何在多个组件之间抽取和复用逻辑。基于 Vue 2.x 目前的 API 我们有一些常见的逻辑复用模式，但都或多或少存在一些问题：
+
+这些模式包括：
+
+Mixins
+高阶组件 (Higher-order Components, aka HOCs)
+Renderless Components (基于 scoped slots / 作用域插槽封装逻辑的组件）
+总体来说，以上这些模式存在以下问题：
+
+模版中的数据来源不清晰。举例来说，当一个组件中使用了多个 mixin 的时候，光看模版会很难分清一个属性到底是来自哪一个 mixin。HOC 也有类似的问题。
+命名空间冲突。由不同开发者开发的 mixin 无法保证不会正好用到一样的属性或是方法名。HOC 在注入的 props 中也存在类似问题。
+性能。HOC 和 Renderless Components 都需要额外的组件实例嵌套来封装逻辑，导致无谓的性能开销。
+vue3中，新增 Composition API。而且新的API兼容 Vue2.x，只需要在项目中，单独引入 @vue/composition-api 这个包就可以，就能够解决我们目前 以上大部分问题。同时，如果我直接升级到 Vue3.x，我要做的事情会更多，只要当前项目中使用到的第三方ui库，都需要重新改造，以及升级后的诸多坑要填！刚开始的时候，我就是直接在当前脚手架的基础上 vue add vue-next 安装升级，但是只要是有依赖第三方生态库的地方，就有许多的坑。。。
+
+Vue3.x 没有导出默认对象 export default，在第三方生态中，常用Vue.xxx()来进行依赖，现在这些语法需要重写，工作量可不小啊！
+
+如果是新团队、小型的项目，可以尝试使用vue3进行尝试开发，慢慢过度，当 Vue3.x 正式 发布 后，而且周边生态跟上来了，就可以直接用vue3了！
+
+在B站直播的时候， 尤大也说了，目前vue3beta版本， 最重要的是提升稳定性，和对第三方工具库的支持。
+
+❤️ 看完三件事: 如果你觉得这篇内容对你挺有启发，我想邀请你帮我个小忙：
+
+点赞，让更多的人也能看到这篇内容，也方便自己随时找到这篇内容（收藏不点赞，都是耍流氓 -_-） 关注我们，不定期分好文章。 也看看其它文章
+
+🔥欢迎你把自己的学习体会写在留言区，与我和其他同学一起讨论。如果你觉得有所收获，也欢迎把文章分享给你的朋友。
+
+本项目在手机端体验效果更佳，可以扫描以下二维码进行体验！👇
+
+
+关注下面的标签，发现更多相似文章
+Vue.js
+将源兵魂lv-2
+发布了 11 篇专栏 · 获得点赞 435 · 获得阅读 15,536
+关注
+安装掘金浏览器插件
+打开新标签页发现好内容，掘金、GitHub、Dribbble、ProductHunt 等站点内容轻松获取。快来安装掘金浏览器插件获取高质量内容吧！
+评论
+
+相关推荐
+专栏
+将源兵魂
+1小时前
+Vue.js
+🔥基于vue3.0.1 beta搭建仿京东淘宝的电商商城项目！
+
+12
+
+专栏
+前端劝退师
+2天前
+Vue.jsCI/CD
+当前端基建任务落到你身上，该如何推动协作？
+
+220
+
+10
+热
+专栏
+前端劝退师
+11天前
+前端
+抄笔记：尤雨溪在Vue3.0 Beta直播里聊到了这些…
+
+1437
+
+181
+专栏
+晨曦时梦见兮
+13天前
+React.jsVue.js
+Vue3 究竟好在哪里？（和 React Hook 的详细对比）
+
+728
+
+149
+专栏
+铁皮饭盒
+5天前
+Vue.jsJavaScript
+告别无聊的undefined判断, 让老vue-cli3支持🚀"可选链"等"ES2020"特性
+
+153
+
+66
+专栏
+Moustache_壮壮
+4天前
+Vue.js
+Vue的'奇技淫巧'
+
+53
+
+23
+专栏
+叫我詹躲躲
+2天前
+Vue.js
+vue实战项目：项目技巧总结（一）
+
+14
+
+专栏
+流_星
+3天前
+Vue.js
+手拉手带你开启Vue3世界的鬼斧神工
+
+48
+
+17
+专栏
+sam9831
+15天前
+Vue.jsJavaScript
+Vue 3.0 全家桶抢先体验
+
+364
+
+117
+专栏
+叫我詹躲躲
+2天前
+Vue.js
+vue实战项目：项目技巧总结（二）
+
+6
+
+关于作者
+将源兵魂lv-2
+获得点赞435
+文章被阅读15,536
+掘金小册
+Git 原理详解及实用指南
+新人价 ￥14.95
+￥29.9
+剖析 Vue.js 内部运行机制
+新人价 ￥4.95
+￥9.9
+新人专享好礼
+
+送你45元买小册
+立即领取
+相关文章
+🔥 2020年从基础到进阶，测试你有多了解 JavaScript，刷新你的知识！🚀
+36936
+10分钟内的Npm脚本教程🔥
+120
+webpack小白入门之，postCSS，autoprefixer，CSS px转rem，静态资源内联【1-5】
+50
+webpack小白入门之文件监听，热更新，文件指纹，代码压缩【1-4】
+50
+so easy！一键快速生成，搭建一个属于自己的博客网站。
+50
+目录
+前言
+项目介绍
+搭建步骤
+项目的初始化
+安装
+使用
+Vue 3.0 Composition-API基本特性体验
+setup函数
+新钩子
+依赖注入
+Ref自动展开（unwrap）
+reactive
+isRef
+toRefs
+computed
+watch
+观察单一来源
+watch多个来源
+在 watch 中清除无效的异步任务
+最后
