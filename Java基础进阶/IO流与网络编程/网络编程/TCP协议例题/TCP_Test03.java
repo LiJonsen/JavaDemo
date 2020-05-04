@@ -9,7 +9,7 @@ import java.net.Socket;
  * TCP例题三：
  * 客户端发送文件给服务端，服务端将文件保存到本地、
  * 并且返回“发送成功”给客户端，然后关闭所有资源连接
- * 涉及数据阻塞；
+ * 调用socket.shutdownOutput()避免客户端数据输出阻塞；
  * （正常开发中，需要通过try-catch-finally处理异常和close）
  */
 public class TCP_Test03 {
@@ -29,7 +29,7 @@ public class TCP_Test03 {
         }
         // 2.2 输出给ServerSocket
         outputStream.write(baos.toByteArray());
-        // 2.3 关闭Socket输出流
+        // 2.3 关闭Socket输出流（防止阻塞）
         socket.shutdownOutput();
         // 2.4 接收ServerSocket的反馈
         InputStream inputStream = socket.getInputStream();
