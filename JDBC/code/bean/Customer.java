@@ -1,12 +1,12 @@
 package JDBC_test.bean;
+import java.sql.Blob;
 import java.sql.Date;
-
 public class Customer {
     private int id;
     private String name;
     private String email;
     private Date birth;
-
+    private Blob photo;
     public Customer() {
     }
     public Customer(int id, String name, String email, Date birth) {
@@ -16,15 +16,31 @@ public class Customer {
         this.birth = birth;
     }
 
+    public Customer(int id, String name, String email, Date birth, Blob photo) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.birth = birth;
+        this.photo = photo;
+    }
 
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", birth=" + birth +
+                ", photo=" + photo +
                 '}';
+    }
+
+    public Blob getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Blob photo) {
+        this.photo = photo;
     }
 
     public String getName() {

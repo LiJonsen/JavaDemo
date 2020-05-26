@@ -3,12 +3,15 @@ package JDBC_test;
 import JDBC_test.Utils.CommonUtil;
 import JDBC_test.Utils.JDBC_Utils;
 import JDBC_test.Utils.QueryForCustomers;
+import JDBC_test.Utils.QueryForTables;
 import JDBC_test.bean.Customer;
+import JDBC_test.bean.Order;
 import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 
 /**
@@ -27,6 +30,28 @@ import java.sql.SQLException;
  * 4. getMetaDate().getColumnLabel()：获取当前列的别名，没有设置别名返回列名
  */
 public class PreparedStatement {
+    /**
+     * 测试查询不同数据表的多条记录
+     */
+    @Test
+    public void testQueryForTables(){
+        String sql = "select order_id orderID,order_name orderName,order_date orderDate from `order` where order_id<?";
+        List<Order> result = QueryForTables.getResult(Order.class, sql, 3);
+        result.forEach(System.out::println);
+
+        String cus_sql = "select id,name,email,birth from customers where id < ?";
+        List<Customer> cus_res = QueryForTables.getResult(Customer.class, cus_sql, 10);
+        cus_res.forEach(System.out::println);
+    }
+    /**
+     * 测试查询Customer单个数据表方法
+     */
+    @Test
+    public void testQueryForCustomers(){
+        String sql = "select id,name,email,birth from customers where name=?";
+        Customer customer = QueryForCustomers.selectCustomersResult(sql, "张学友");
+        System.out.println(customer);
+    }
     // 实现对数据表的增删改操作
     @Test
     public void testing(){
@@ -114,13 +139,5 @@ public class PreparedStatement {
         }
     }
 
-    /**
-     * 测试查询Customer数据表方法
-     */
-    @Test
-    public void testQueryForCustomers(){
-        String sql = "select id,name,email,birth from customers where name=?";
-        Customer customer = QueryForCustomers.selectCustomersResult(sql, "张学友");
-        System.out.println(customer);
-    }
+
 }
