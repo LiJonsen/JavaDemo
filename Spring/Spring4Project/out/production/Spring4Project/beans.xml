@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 配置一个基础bean -->
+    <bean id="helloSpring" class="com.helloSpring.HelloSpring">
+        <property name="name" value="刘德华"></property>
+        <property name="id" value="01"></property>
+        <property name="age" value="50"></property>
+    </bean>
+    <!--  配置一个拥有其他bean的属性  -->
+    <bean id="customer" class="com.helloSpring.Customer">
+        <property name="name" value="张学友"></property>
+        <!--    方式一：指定id    -->
+<!--        <property name="order" ref="c_order"></property>-->
+        <!--    方式二：声明内部bean    -->
+        <property name="order">
+            <bean class="com.helloSpring.Order">
+                <property name="order_id" value="1002"></property>
+                <property name="order_name" value="MateBook14"></property>
+                <property name="price" value="7888"></property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="c_order" class="com.helloSpring.Order">
+        <property name="order_id" value="1001"></property>
+        <property name="order_name" value="篮球"></property>
+        <property name="price" value="88"></property>
+    </bean>
+    <bean id="c_order2" class="com.helloSpring.Order">
+        <property name="order_id" value="1003"></property>
+        <property name="order_name" value="冰箱"></property>
+        <property name="price" value="399"></property>
+    </bean>
+<!--  使用util声明通List  -->
+<util:list id="listOrder">
+    <ref bean="c_order"></ref>
+    <ref bean="c_order2"></ref>
+</util:list>
+
+<!--
+    1. 配置有List、Map集合Bean
+    2. <bean scope="作用域" 【默认情况下 bean 是单例的!】
+       singleton(单例模式)
+       prototype=原型 （即每从IOC容器获取的都是新的bean对象）
+    3. <bean parent="要继承的bean id"/>
+-->
+<bean id="customerCollection" class="com.helloSpring.Customer" scope="prototype">
+    <property name="name" value="周星驰"></property>
+    <!--  使用util定义的bean  -->
+    <property name="order" ref="c_order2"></property>
+    <!--  配置List集合参数  -->
+    <!--  方式一：使用Util声明  -->
+    <property name="order_list" ref="listOrder"/>
+    <!--  方式二：  -->
+<!--    <property name="order_list">-->
+<!--        <list>-->
+<!--            <ref bean="c_order"></ref>-->
+<!--            <ref bean="c_order2"></ref>-->
+<!--        </list>-->
+<!--    </property>-->
+
+    <!--  配置Map集合参数  -->
+    <property name="order_map">
+        <map key-type="java.lang.Integer" value-type="com.helloSpring.Order">
+            <entry key="1" value-ref="c_order2"></entry>
+            <entry key="2" value-ref="c_order2"></entry>
+        </map>
+    </property>
+</bean>
+</beans>
