@@ -101,6 +101,13 @@ public class Solution {
 
     /**
      * 两数相加算法实现
+     * param结构：ListNode{
+     *  val=int,
+     *  next=ListNode{
+     *      val=int,
+     *      next=ListNode{val=int,next=...}
+     *  }
+     * }
      * @param l1
      * @param l2
      * @return
