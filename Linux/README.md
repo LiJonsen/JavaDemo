@@ -52,3 +52,123 @@ reboot
 sync
 ```
 
+
+
+
+
+#### Shell脚本
+
+##### 快速入门
+
+新建一个helloworld.sh脚本文件
+
+helloworld.sh
+
+```shell
+#!/bin/bash
+echo "Hello Shell...";
+```
+
+执行方式一（推荐）
+
+```
+# 赋予helloworld.sh脚本的+x执行权限
+chmod 744 helloworld.sh
+# 执行脚本
+# 1. 相对路径
+./helloworld.sh
+# 2. 绝对路径
+~/myShell/helloworld.sh
+
+
+# 修改权限后，helloworld.sh脚本失去执行权限
+chmod 644 helloworld.sh
+```
+
+
+
+执行方式二（不推荐）
+
+```
+# 直接执行
+sh helloworld.sh;
+```
+
+
+
+#### Shell变量
+
+##### 系统变量
+
+> 如：$PATH、$USER、$HOME、$SHELL、$PWD等等...
+
+##### 自定义变量
+
+输出当前日期
+
+```shell
+MY_VAR=$(date);
+echo "date=$MY_VAR";
+
+# 将命令的返回值赋值给变量
+SOME_VAL=`ls -l`;
+SOME_VAL2=$(ls -l);
+```
+
+注意点：
+
+* 变量名全部大写
+* 变量在双引号里通过`$变量名`使用
+* `=`号两侧不能有空格
+* `unset 变量`可以撤销变量
+* `readonly 变量`设置只读
+
+##### 设置环境变量
+
+> 作用：配置全局环境变量后，可以在任意的shell脚本代码中获取到。【`/etc/profile`文件可以配置全局环境变量】
+
+
+
+1. 在/etc/profile末尾添加以下代码，并保存
+
+   ```shell
+   TOMCAT_HOME=/opt/tomcat
+   export TOMCAT_HOME
+   ```
+
+2. 控制台输入 `source /etc/profile` 刷新环境变量
+
+3. 在shell脚本中使用
+
+   ```shell
+   # 输出：/opt/tomcat
+   echo "tomcathome=$TOMCAT_HOME"
+   ```
+
+   
+
+#### 函数
+
+##### 系统函数
+
+* basename：
+
+  ```shell
+  #basename [string] [suffix]
+  # 返回test.txt
+  basename /home/root/test.txt
+  # 返回test
+  basename /home/root/test.txt .txt
+  ```
+
+  
+
+* dirname：
+
+  ```shell
+  #dirname [string] [suffix]
+  # /home/root/
+  dirname /home/root/test.txt
+  ```
+
+  
