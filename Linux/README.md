@@ -1,4 +1,4 @@
-#### /目录文件结构说明
+#### Linux目录结构
 
 * /bin（/usr/bin & /usr/local/bin）：是Binary的缩写，这个目录存放着最经常使用的命令；
 * /sbin （/usr/sbin & /usr/local/bin）：s就是super user的意思，这里存放的是系统管理员使用的系统管理程序；
@@ -22,39 +22,6 @@
 * /lost+found：这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件；
 
 > Tip：proc & src & sys这三个目录一般情况不需要改动；
-
-#### vmtools工具
-
-* 可以直接粘贴命令在windows和centos系统之间
-* 可以设置windows和centos的共享文件夹
-
-
-
-
-
-#### 常用指令
-
-##### 关机&重启
-
-> Tip：当我们关机或者重启时，都应该先执行以下 sync 指令，把内存的数据写入磁盘，防止数据丢失。
-
-```
-shutdown
-	shutdown -h now  // 表示立即关机
-	shutdown -h 1 // 表示1分钟后关机
-	shutdown -r now // 立即重启
-// 效果等价于关机
-halt
-
-// 重启系统
-reboot 
-// 把内存的数据同步到磁盘
-sync
-```
-
-
-
-
 
 #### Shell脚本
 
@@ -172,3 +139,82 @@ SOME_VAL2=$(ls -l);
   ```
 
   
+
+#### 使用yum安装Nodejs
+
+
+
+* 指定nodejs版本：	
+
+  * ```
+    curl -sL https://deb.nodesource.com/setup_14.x | bash -
+    ```
+
+  * 详细查询：https://github.com/nodesource/distributions
+
+* 开始安装：
+
+  * ```
+    yum -y install nodejs
+    ```
+
+* 安装完成：
+
+  * ```
+    # 查看版本
+    node -v
+    ```
+
+  
+
+  
+
+#### 云服务器
+
+##### 修改SSH远程连接默认22端口
+
+1. 修改centos配置文件，暂时以新增的方式添加一个端口，等配置完成测试SSH远程连接新添加的端口没有问题后再屏蔽22端口；
+
+```
+vim /etc/ssh/sshd_config
+```
+
+![config](D:\Josen\JavaDemo\Linux\imgs\config.png)
+
+
+
+2. 执行restart命令，让配置生效
+
+```
+systemctl restart sshd.service
+```
+
+
+
+3. 配置防火墙（使用firewalld示例）
+
+```
+# 如果防火墙没有启动，则运行一下命令开启
+systemctl start firewalld.servicce
+
+# 添加开放端口
+firewall-cmd --add-port=23456/tcp --permanent
+
+# 添加成功后，重启防火墙才会生效
+systemctl reload firewalld.service
+```
+
+
+
+4. 修改云服务器安全组配置，添加入站规则
+
+![config](D:\Josen\JavaDemo\Linux\imgs\security_config.png)
+
+![config](D:\Josen\JavaDemo\Linux\imgs\security_config2.png)
+
+
+
+5. 使用XShell测试连接23456端口远程连接服务器
+   1. 测试连接成功后，运行`vim /etc/ssh/sshd_config`命令，屏蔽22默认端口；
+   2. 到云服务器安全组，修改第4步的配置，将22端口去掉；
+   3. 在XShell重新连接服务器，测试22端口已经不能登录服务器了；
