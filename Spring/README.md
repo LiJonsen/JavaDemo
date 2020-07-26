@@ -57,7 +57,9 @@ IOC 描述的是一种思想，而DI 是对IOC思想的具体实现.
 
 ##### 1.7 结构图（从下往上看）
 
-![image-20200724170920625](.\imgs\spring.png)
+![spring](.\imgs\spring.png)
+
+
 
 * Core Container：核心容器
 * AOP：面向切面编程
