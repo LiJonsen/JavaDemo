@@ -179,7 +179,7 @@ SOME_VAL2=$(ls -l);
 vim /etc/ssh/sshd_config
 ```
 
-![config](D:\Josen\JavaDemo\Linux\imgs\config.png)
+<img src=".\imgs\config.png"/>
 
 
 
@@ -208,9 +208,11 @@ systemctl reload firewalld.service
 
 4. 修改云服务器安全组配置，添加入站规则
 
-![config](D:\Josen\JavaDemo\Linux\imgs\security_config.png)
+<img src=".\imgs\security_config.png"/>
 
-![config](D:\Josen\JavaDemo\Linux\imgs\security_config2.png)
+
+
+<img src=".\imgs\security_config2.png"/>
 
 
 

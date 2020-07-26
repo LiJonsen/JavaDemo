@@ -30,13 +30,15 @@ ps -ef | grep nginx
 
 > 特点： 需要在客户端配置代理服务器进行指定网站访问 ；
 
-![reverseProxy](D:\Josen\JavaDemo\Nginx\images\proxy.png)
+<img src=".\images\proxy.png"/>
+
+
 
 #### 反向代理
 
 > 特点：暴露的是代理服务器的地址，隐藏了真实的服务器地址；
 
-![reverseProxy](D:\Josen\JavaDemo\Nginx\images\reverseProxy.png)
+<img src=".\images\reverseProxy.png"/>
 
 nginx.conf配置
 
@@ -62,7 +64,9 @@ http{
 
 > 特点： 增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的 情况改为将请求分发到多个服务器上，将负载分发到不同的服务器；
 
-![reverseProxy](D:\Josen\JavaDemo\Nginx\images\fzjh.png)
+<img src=".\images\fzjh.png"/>
+
+
 
 nginx.conf配置
 
@@ -103,18 +107,22 @@ nginx 分配服务器策略
 
 > 特点：将静态资源（html、css、images）和动态资源（Java、Nodejs、Jsp）划分存储，通过nginx实现不同的url访问不同的服务器资源；
 
-![reverseProxy](D:\Josen\JavaDemo\Nginx\images\djfl.png)
+<img src=".\images\djfl.png"/>
+
+
 
 #### 高可用集群
 
 > 特点：开启两个服务器（Master&Backup），两个服务器中开启并配置好`nginx & keepalived & tomcat`环境，当Master服务器的Nginx宕机或关闭时，则会自动开启Backup服务器的Nginx，避免客户端无法访问。
 
-![gky](D:\Josen\JavaDemo\Nginx\images\gky.png)
+<img src=".\images\gky.png"/>
+
+
 
 #### 配置SSL证书（https）
 
 > * 证书下载：SSL证书管理控制台（阿里云）
->   * <img src="D:\Josen\JavaDemo\Nginx\images\ssl_download.png" alt="ssl_download" style="zoom:80%;" />
+>   * <img src=".\images\ssl_download.png"/>
 > * 在Nginx服务器配置SSL证书： https://help.aliyun.com/document_detail/98728.html?spm=5176.2020520163.0.0.b68656a7whHJKZ 
 
 
@@ -125,7 +133,9 @@ nginx 分配服务器策略
 nginx -V
 ```
 
-![nginx_config](D:\Josen\JavaDemo\Nginx\images\nginx_config.png)
+
+
+<img src=".\images\nginx_config.png"/>
 
 修改防火墙配置
 
@@ -165,6 +175,6 @@ firewall-cmd –reload
 
 
 
-![reverseProxy](D:\Josen\JavaDemo\Nginx\images\firewallList.png)
+<img src=".\images\firewallList.png"/>
 
 > Tip：如果防火墙已经开放指定的端口号还是不行，登录到云服务器后台，`配置安全组后即可`；

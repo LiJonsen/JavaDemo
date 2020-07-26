@@ -428,7 +428,7 @@ IOC 描述的是一种思想，而DI 是对IOC思想的具体实现.
 
 可以在IOC容器XML中通过配置`<bean>`元素的scope属性里设置bean的作用域，以决定这个bean的作用域类型；
 
-![image-20200725122132703](.\imgs\scope.png)
+<img src=".\imgs\scope.png"/>
 
 ```xml
 	<!--  默认scope="singleton"  -->
@@ -476,7 +476,7 @@ IOC 描述的是一种思想，而DI 是对IOC思想的具体实现.
 
 **声明周期示意图**
 
-![LifeCycle](.\imgs\LifeCycle.png)
+<img src=".\imgs\LifeCycle.png"/>
 
 ###### ⑤-引用外部属性文件
 
