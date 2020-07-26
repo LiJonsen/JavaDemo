@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.getting_start.mapper.EmployeeMapper">
+    <select id="queryEmployeeBySalaryForStep" resultMap="getEmployeeForStep">
+        SELECT
+            employee_id,salary,first_name,last_name,phone_number,department_id
+        FROM
+            employees
+        WHERE
+            salary>=#{salary}
+    </select>
+
+    <resultMap id="getEmployeeForStep" type="com.josen.getting_start.bean.Employee">
+        <id column="employee_id" property="eid"></id>
+        <result column="salary" property="salary"></result>
+        <result column="first_name" property="firstName"></result>
+        <result column="last_name" property="lastName"></result>
+        <result column="phone_number" property="phoneNumber"></result>
+        <!--    select：引入指定SQL映射文件    -->
+        <collection
+                property="deps"
+                column="department_id"
+                select="com.josen.getting_start.mapper.DepartmentMapper.queryDepartmentAndLocation">
+        </collection>
+    </resultMap>
+
+
+
+    <!--  *********************************动态SQL*******************************  -->
+
+    <!--  if & where标签  -->
+    <select id="queryEmployeeForDynamicSql" resultType="com.josen.getting_start.bean.Employee">
+        SELECT
+            employee_id eid,salary,first_name,last_name,phone_number
+        FROM
+            employees
+        <where>
+            <if test="eid!=0">
+               and employee_id = #{eid}
+            </if>
+            <if test="salary!=null">
+               and salary = #{salary}
+            </if>
+            <if test="firstName!=null">
+               and first_name = #{firstName}
+            </if>
+            <if test="lastName!=null">
+               and last_name = #{lastName}
+            </if>
+            <if test="phoneNumber!=null">
+               and phone_number = #{phoneNumber}
+            </if>
+        </where>
+    </select>
+
+    <!--  foreach标签  -->
+    <select id="queryEmployeesByForeach" resultType="com.josen.getting_start.bean.Employee">
+        SELECT
+            employee_id eid,salary,first_name,last_name,phone_number
+        FROM
+            employees
+        WHERE
+            employee_id in
+            <foreach
+                    collection="e_ids"
+                    item="id"
+                    open="(" close=")"
+                    separator=","
+            >
+                #{id}
+            </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <!--    bean的高级配置    -->
+
+        <!--    1. bean的继承    -->
+        <bean id="father" abstract="true">
+            <property name="brand" value="奥迪"></property>
+            <property name="price" value="300000"></property>
+        </bean>
+
+        <bean id="car1" class="com.beans.Car" parent="father"></bean>
+
+        <!--  depends-on定义bean之间的依赖关系，如果没有配置依赖bean则无法使用当前bean  -->
+        <bean id="man1" class="com.beans.RichMan" depends-on="car1">
+            <property name="name" value="Timi"></property>
+            <property name="cars">
+                <list>
+                    <ref bean="car1"></ref>
+                    <ref bean="car1"></ref>
+                </list>
+            </property>
+        </bean>
+</beans>

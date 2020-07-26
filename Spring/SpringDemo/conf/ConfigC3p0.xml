@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--    引入外部属性文件配置c3p0    -->
+
+    <!-- classpath:xxx 表示属性文件位于类路径下 -->
+    <context:property-placeholder location="classpath:c3p0.properties"/>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${prop.driverClass}"></property>
+        <property name="jdbcUrl" value="${prop.url}"></property>
+        <property name="user" value="${prop.userName}"></property>
+        <property name="password" value="${prop.password}"></property>
+        <property name="minPoolSize" value="5"></property>
+        <property name="maxPoolSize" value="10"></property>
+    </bean>
+</beans>

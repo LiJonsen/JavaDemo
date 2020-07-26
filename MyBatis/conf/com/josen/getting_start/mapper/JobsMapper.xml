@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.getting_start.mapper.JobsMapper">
+    <!--  查询一条记录  -->
+    <select id="queryOne" resultType="job">
+         select * from jobs where job_id = #{jobId}
+     </select>
+    <!--  查询所有记录  -->
+    <select id="queryAll" resultType="job">
+         select * from jobs
+     </select>
+    <!--  新增、更新、删除操作  -->
+    <insert id="insertOne">
+        insert into jobs values(#{jobId},#{jobTitle},#{minSalary},#{maxSalary})
+    </insert>
+    <update id="updateOne">
+        update jobs set job_title=#{jobTitle},min_salary=#{minSalary},max_salary=#{maxSalary} where job_id=#{jobId}
+    </update>
+    <delete id="deleteOne">
+        delete from jobs where job_id=#{jobId}
+    </delete>
+
+
+    <!--  Mapper接口提供两个参数查询（使用@Param指定参数名）  -->
+    <select id="queryByJobIdAndMaxSalary" resultType="Job">
+        select * from jobs where job_id=#{jobId} and max_salary>#{maxSalary}
+    </select>
+
+    <!--  接受Map集合传递过来的数据 - 通过#{key}取值  -->
+    <select id="queryJobForMap" resultType="Job">
+        select * from jobs where job_title like '${title}%' and min_salary > #{salary}
+    </select>
+</mapper>

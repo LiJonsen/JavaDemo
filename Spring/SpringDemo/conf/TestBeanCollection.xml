@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <bean id="richMan" class="com.beans.RichMan">
+        <property name="name" value="James"></property>
+        <property name="cars">
+            <list>
+                <ref bean="car"></ref>
+                <ref bean="car2"></ref>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="richMan2" class="com.beans.RichMan">
+        <property name="name" value="Mark"></property>
+        <property name="carsMap" ref="utilCars">
+<!--            <map>-->
+<!--                <entry key="1" value-ref="car"></entry>-->
+<!--                <entry key="2" value-ref="car2"></entry>-->
+<!--            </map>-->
+        </property>
+    </bean>
+    <!--  使用util命名空间，定义通用map集合bean  -->
+    <util:map id="utilCars">
+        <entry key="1" value-ref="car"></entry>
+        <entry key="2" value-ref="car2"></entry>
+    </util:map>
+    <bean id="car" class="com.beans.Car">
+        <property name="price" value="200000"></property>
+        <property name="brand" value="五菱宏光"></property>
+    </bean>
+    <bean id="car2" class="com.beans.Car">
+        <property name="price" value="150000"></property>
+        <property name="brand" value="卡罗拉"></property>
+    </bean>
+
+
+</beans>

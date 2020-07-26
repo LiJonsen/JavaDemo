@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="jdbc.properties"></properties>
+
+    <settings>
+        <!--    映射下划线到驼峰命名    -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 开启延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 设置加载的数据是按需还是全部 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <!-- 将bean下所有类添加别名，默认为类名   -->
+    <typeAliases>
+        <package name="com.josen.getting_start.bean"/>
+    </typeAliases>
+    <!--  引入外部jdbc配置文件  -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <!-- 数据库配置信息 -->
+            <dataSource type="POOLED">
+                <!--
+                在url中&符号 ==> &amp;
+
+                useUnicode=true&amp;
+                characterEncoding=utf8&amp;
+                useSSL=false&amp;
+                serverTimezone=GMT%2B8
+                -->
+<!--                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/myemployees?serverTimezone=GMT%2B8"/>-->
+<!--                <property name="username" value="root"/>-->
+<!--                <property name="password" value="root"/>-->
+
+                <!-- 使用配置文件 -->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 引入SQL映射文件,Mapper映射文件 	-->
+    <mappers>
+<!--        <mapper resource="EmployeeMapper.xml"/>-->
+        <!--   批量引入SQL映射文件     -->
+        <package name="com.josen.getting_start.mapper"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.getting_start.mapper.DepartmentMapper">
+    <!--
+        根据department_id查询指定部门+地址信息
+        Department queryDepartmentAndLocation();
+    -->
+   <select id="queryDepartmentAndLocation" resultMap="getDepartmentAndLocation">
+        SELECT
+	        d.department_id,d.department_name,l.city,l.country_id,l.location_id
+        FROM
+            departments d
+        JOIN
+            locations l
+        ON
+            d.`location_id`=l.`location_id`
+        WHERE
+            d.department_id=#{departmentId};
+   </select>
+    <!--  resultMap：自定义映射  -->
+    <resultMap id="getDepartmentAndLocation" type="com.josen.getting_start.bean.Department">
+        <id column="department_id" property="did"></id>
+        <result column="department_name" property="departmentName"></result>
+        <!--    使用级联    -->
+        <association property="location" javaType="com.josen.getting_start.bean.Location">
+            <id column="location_id" property="locationId"></id>
+            <result column="city" property="city"></result>
+            <result column="country_id" property="countryId"></result>
+        </association>
+    </resultMap>
+</mapper>

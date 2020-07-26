@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--   IOC容器   -->
+
+    <bean id="person" class="com.beans.Person">
+        <property name="name" value="JosenLi"></property>
+    </bean>
+
+    <bean id="person2" class="com.beans.Person">
+        <property name="name" value="Rose"></property>
+    </bean>
+</beans>

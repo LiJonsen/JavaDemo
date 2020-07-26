@@ -47,7 +47,7 @@ class ProxyClass{
         return Proxy.newProxyInstance(clazz.getClassLoader(),clazz.getInterfaces(),handle);
     }
 }
-// 2.2 InvocationHandler实现类
+// 2.2 InvocationHandler实现类【是代理实例的调用处理程序 实现的接口】
 class ProxyHandle implements InvocationHandler{
     // 当前被代理类
     private Object obj;

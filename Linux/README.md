@@ -1,4 +1,4 @@
-#### /目录文件结构说明
+#### 根目录文件结构说明
 
 * /bin（/usr/bin & /usr/local/bin）：是Binary的缩写，这个目录存放着最经常使用的命令；
 * /sbin （/usr/sbin & /usr/local/bin）：s就是super user的意思，这里存放的是系统管理员使用的系统管理程序；
@@ -22,33 +22,4 @@
 * /lost+found：这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件；
 
 > Tip：proc & src & sys这三个目录一般情况不需要改动；
-
-#### vmtools工具
-
-* 可以直接粘贴命令在windows和centos系统之间
-* 可以设置windows和centos的共享文件夹
-
-
-
-
-
-#### 常用指令
-
-##### 关机&重启
-
-> Tip：当我们关机或者重启时，都应该先执行以下 sync 指令，把内存的数据写入磁盘，防止数据丢失。
-
-```
-shutdown
-	shutdown -h now  // 表示立即关机
-	shutdown -h 1 // 表示1分钟后关机
-	shutdown -r now // 立即重启
-// 效果等价于关机
-halt
-
-// 重启系统
-reboot 
-// 把内存的数据同步到磁盘
-sync
-```
 

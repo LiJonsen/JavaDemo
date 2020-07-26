@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+        autowire-自动装配：bean的属性值类型必须是引用数据类型
+        byName：根据bean属性值名字匹配IOC容器中对应id值的bean，自动填入
+        byType：根据bean属性值类型匹配IOC容器中对应类型的<bean/>
+      -->
+    <bean id="emp2" class="com.beans.Employee" autowire="byName">
+        <property name="name" value="LadyGaga"></property>
+    </bean>
+
+    <!--  默认scope="singleton"  -->
+    <bean id="car" class="com.beans.Car" scope="prototype">
+        <property name="brand" value="BMW"></property>
+        <property name="price" value="388888"></property>
+    </bean>
+
+    <!--
+        测试bean的生命周期
+        init-method：指定Employee类中的init方法为初始化时调用的方法
+        destroy-method：指定Employee类中的destroy方法为销毁时调用的方法
+    -->
+    <bean id="employee" class="com.beans.Employee" init-method="init" destroy-method="destroy">
+        <property name="name" value="Jack"></property>
+        <property name="age" value="22"></property>
+    </bean>
+    <!--
+        配置后置处理器
+        MyBeanPostProcessor类实现BeanPostProcessor接口
+    -->
+    <bean class="com.bean_lifecycle.MyBeanPostProcessor"></bean>
+</beans>

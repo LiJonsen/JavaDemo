@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--  DI依赖注入  -->
+    <!-- 通过bean的setXxx()方法赋值   -->
+    <bean id="setCar" class="com.beans.Car">
+        <property name="brand" value="奥迪"></property>
+        <property name="price" value="400000"></property>
+    </bean>
+
+    <!--
+        通过构造器方式赋值
+        value=传入构造器的值
+        index=第几个参数
+        type=传入的类型
+    -->
+    <bean id="consCar" class="com.beans.Car">
+        <constructor-arg value="马自达" index="0" type="java.lang.String"></constructor-arg>
+        <constructor-arg value="120000" index="1" type="java.lang.Double"></constructor-arg>
+    </bean>
+
+
+    <!--  p命名空间  -->
+    <bean
+            id="carByP"
+            class="com.beans.Car"
+            p:brand="雪佛兰"
+            p:price="200000"
+    >
+    </bean>
+</beans>
