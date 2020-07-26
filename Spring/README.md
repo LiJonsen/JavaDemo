@@ -57,7 +57,7 @@ IOC 描述的是一种思想，而DI 是对IOC思想的具体实现.
 
 ##### 1.7 结构图（从下往上看）
 
-![spring](.\imgs\spring.png)
+<img src=".\imgs\spring.png"/>
 
 
 
