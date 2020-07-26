@@ -1,4 +1,4 @@
-#### 根目录文件结构说明
+#### Linux目录结构
 
 * /bin（/usr/bin & /usr/local/bin）：是Binary的缩写，这个目录存放着最经常使用的命令；
 * /sbin （/usr/sbin & /usr/local/bin）：s就是super user的意思，这里存放的是系统管理员使用的系统管理程序；
@@ -23,3 +23,198 @@
 
 > Tip：proc & src & sys这三个目录一般情况不需要改动；
 
+#### Shell脚本
+
+##### 快速入门
+
+新建一个helloworld.sh脚本文件
+
+helloworld.sh
+
+```shell
+#!/bin/bash
+echo "Hello Shell...";
+```
+
+执行方式一（推荐）
+
+```
+# 赋予helloworld.sh脚本的+x执行权限
+chmod 744 helloworld.sh
+# 执行脚本
+# 1. 相对路径
+./helloworld.sh
+# 2. 绝对路径
+~/myShell/helloworld.sh
+
+
+# 修改权限后，helloworld.sh脚本失去执行权限
+chmod 644 helloworld.sh
+```
+
+
+
+执行方式二（不推荐）
+
+```
+# 直接执行
+sh helloworld.sh;
+```
+
+
+
+#### Shell变量
+
+##### 系统变量
+
+> 如：$PATH、$USER、$HOME、$SHELL、$PWD等等...
+
+##### 自定义变量
+
+输出当前日期
+
+```shell
+MY_VAR=$(date);
+echo "date=$MY_VAR";
+
+# 将命令的返回值赋值给变量
+SOME_VAL=`ls -l`;
+SOME_VAL2=$(ls -l);
+```
+
+注意点：
+
+* 变量名全部大写
+* 变量在双引号里通过`$变量名`使用
+* `=`号两侧不能有空格
+* `unset 变量`可以撤销变量
+* `readonly 变量`设置只读
+
+##### 设置环境变量
+
+> 作用：配置全局环境变量后，可以在任意的shell脚本代码中获取到。【`/etc/profile`文件可以配置全局环境变量】
+
+
+
+1. 在/etc/profile末尾添加以下代码，并保存
+
+   ```shell
+   TOMCAT_HOME=/opt/tomcat
+   export TOMCAT_HOME
+   ```
+
+2. 控制台输入 `source /etc/profile` 刷新环境变量
+
+3. 在shell脚本中使用
+
+   ```shell
+   # 输出：/opt/tomcat
+   echo "tomcathome=$TOMCAT_HOME"
+   ```
+
+   
+
+#### 函数
+
+##### 系统函数
+
+* basename：
+
+  ```shell
+  #basename [string] [suffix]
+  # 返回test.txt
+  basename /home/root/test.txt
+  # 返回test
+  basename /home/root/test.txt .txt
+  ```
+
+  
+
+* dirname：
+
+  ```shell
+  #dirname [string] [suffix]
+  # /home/root/
+  dirname /home/root/test.txt
+  ```
+
+  
+
+#### 使用yum安装Nodejs
+
+
+
+* 指定nodejs版本：	
+
+  * ```
+    curl -sL https://deb.nodesource.com/setup_14.x | bash -
+    ```
+
+  * 详细查询：https://github.com/nodesource/distributions
+
+* 开始安装：
+
+  * ```
+    yum -y install nodejs
+    ```
+
+* 安装完成：
+
+  * ```
+    # 查看版本
+    node -v
+    ```
+
+  
+
+  
+
+#### 云服务器
+
+##### 修改SSH远程连接默认22端口
+
+1. 修改centos配置文件，暂时以新增的方式添加一个端口，等配置完成测试SSH远程连接新添加的端口没有问题后再屏蔽22端口；
+
+```
+vim /etc/ssh/sshd_config
+```
+
+![config](D:\Josen\JavaDemo\Linux\imgs\config.png)
+
+
+
+2. 执行restart命令，让配置生效
+
+```
+systemctl restart sshd.service
+```
+
+
+
+3. 配置防火墙（使用firewalld示例）
+
+```
+# 如果防火墙没有启动，则运行一下命令开启
+systemctl start firewalld.servicce
+
+# 添加开放端口
+firewall-cmd --add-port=23456/tcp --permanent
+
+# 添加成功后，重启防火墙才会生效
+systemctl reload firewalld.service
+```
+
+
+
+4. 修改云服务器安全组配置，添加入站规则
+
+![config](D:\Josen\JavaDemo\Linux\imgs\security_config.png)
+
+![config](D:\Josen\JavaDemo\Linux\imgs\security_config2.png)
+
+
+
+5. 使用XShell测试连接23456端口远程连接服务器
+   1. 测试连接成功后，运行`vim /etc/ssh/sshd_config`命令，屏蔽22默认端口；
+   2. 到云服务器安全组，修改第4步的配置，将22端口去掉；
+   3. 在XShell重新连接服务器，测试22端口已经不能登录服务器了；
