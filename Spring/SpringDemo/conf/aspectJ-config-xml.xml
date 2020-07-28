@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--  目标对象  -->
+    <bean id="calculatorImpl" class="com.use_aspectJ.annotationForXml.CalculatorImpl"></bean>
+    <!--  切面  -->
+    <bean id="loggingAspect" class="com.use_aspectJ.annotationForXml.LoggingAspect"></bean>
+
+    <!--  使用xml配置AOP 切面、通知  -->
+    <aop:config>
+        <!--    引用切面    -->
+        <aop:aspect ref="loggingAspect">
+            <!--      切入点表达式      -->
+            <aop:pointcut id="myPointcut" expression="execution(* com.use_aspectJ.annotationForXml.*.*(..))"/>
+
+            <!--      通知      -->
+            <aop:before method="beforeMethod" pointcut-ref="myPointcut"/>
+            <aop:after method="afterMethod" pointcut-ref="myPointcut"/>
+            <aop:after-returning method="afterReturningMethod" pointcut-ref="myPointcut" returning="result"/>
+            <aop:after-throwing method="afterThrowingMethod" pointcut-ref="myPointcut" throwing="err"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

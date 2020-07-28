@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--
+        扫描注解标识的组件，加载到IOC容器
+        base-package: 基包. Spring会扫描指定包以及子包下所有的类，将带有注解的类管理到IOC容器中
+        use-default-filters：禁用默认过滤器，只扫描include-filter中的规则指定的组件；
+        <context:include-filter/>：子节点表示要包含的目标类
+        <context:exclude-filter/>：子节点表示要排除在外的目标类
+     -->
+    <context:component-scan base-package="com.annotation" use-default-filters="true">
+        <!--        排除扫描   use-default-filters="true"   -->
+<!--         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+<!--         <context:include-filter type="assignable" expression="com.annotation.controller.AddUser"/>-->
+<!--         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>-->
+    </context:component-scan>
+</beans>

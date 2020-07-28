@@ -14,6 +14,19 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="AspectJ Config" removed="false">
+          <file>file://$MODULE_DIR$/conf/aspectJ-config.xml</file>
+        </fileset>
+        <fileset id="fileset2" name="AspectJ Config Xml" removed="false">
+          <file>file://$MODULE_DIR$/conf/aspectJ-config-xml.xml</file>
+        </fileset>
+        <fileset id="fileset3" name="Spring Jdbc Config" removed="false">
+          <file>file://$MODULE_DIR$/conf/spring-jdbc-config.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -36,5 +49,8 @@
     </orderEntry>
     <orderEntry type="library" name="c3p0-0.9.1" level="project" />
     <orderEntry type="library" name="spring-aop-4.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="com.springsource.net.sf.cglib-2.2.0" level="project" />
+    <orderEntry type="library" name="spring-jms-4.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="spring-jdbc-4.0.0.RELEASE" level="project" />
   </component>
 </module>

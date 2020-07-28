@@ -569,5 +569,480 @@ public class Employee {
 
 ##### 3.6 通过注解配置bean【重要】
 
+> 相对于XML方式而言，通过注解的方式配置bean更加简洁和优雅，而且和MVC组件化开发的理念十分契合，是开发中常用的使用方式。
+>
+> 
+>
 > 注意：使用注解配置bean的时候，需要导入spring-aop-4.0.0.RELEASE.jar包；
+
+
+
+###### ①-使用注解标识组件
+
+* 普通组件：@Component
+  * 标识一个受Spring IOC容器管理的组件
+* 持久化层组件：@Repository
+  * 标识一个受Spring IOC容器管理的持久化层组件
+* 业务逻辑层组件：@Service
+  * 标识一个受Spring IOC容器管理的业务逻辑层组件
+* 表述层/控制器组件：@Controller
+  * 标识一个受Spring IOC容器管理的表述层/控制器组件
+
+**组件命名规则**
+
+* ①默认情况：使用组件的简单类名首字母小写后得到的字符串作为bean的id
+
+* ②使用组件注解的value属性指定bean的id
+
+> 注意：事实上Spring并没有能力识别一个组件到底是不是它所标记的类型，即使将@Respository注解用在一个表述层控制器组件上面也不会产生任何错误，所以            @Respository、@Service、@Controller这几个注解仅仅是为了让开发人员自己明确当前的组件扮演的角色。
+
+<img src=".\imgs\mvc01.png"/>
+
+###### ②-扫描组件
+
+* base-package：基包. Spring会扫描指定包以及子包下所有的类，将带有注解的类管理到IOC容器中；
+* use-default-filters：禁用默认过滤器，只扫描include-filter中的规则指定的组件；
+* \<context:include-filter/\>：子节点表示要包含的目标类；
+* \<context:exclude-filter/\>：子节点表示要排除在外的目标类；
+* \<context:exclude-filter/\> & \<context:include-filter/\> type属性：
+  * annotation：过滤所有标注了XxxAnnotation的类。这个规则根据目标组件是否标注了指定类型的注解进行过滤；
+  * assignable：过滤所有BaseXxx类的子类。这个规则根据目标组件是否是指定类型的子类的方式进行过滤；
+  * aspectj：所有类名是以Service结束的，或这样的类的子类。这个规则根据AspectJ表达式进行过滤；
+  * regex：所有com.atguigu.anno包下的类。这个规则根据正则表达式匹配到的类名进行过滤；
+  * custom：使用XxxTypeFilter类通过编码的方式自定义过滤规则。该类必须实现org.springframework.core.type.filter.TypeFilter接口；
+
+```xml
+<!-- 扫描注解标识的组件，加载到IOC容器 -->    
+<context:component-scan base-package="com.annotation" use-default-filters="false">
+         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+         <context:exclude-filter type="assignable" expression="com.contorller.UserController"/>
+</context:component-scan>
+```
+
+
+
+###### ③-组件装配
+
+> 在指定要扫描的包时，\<context:component-scan\> 元素会自动注册一个bean的后置处理器：AutowiredAnnotationBeanPostProcessor的实例。该后置处理器可以 自动装配标记了`@Autowired`、`@Resource`或`@Inject`注解的属性
+
+使用`@Autowired`组件装配
+
+```java
+@Controller
+public class UserController {
+    @Autowired
+    private AddUserServiceImpl addUserService;
+
+    public void runAddUser(){
+        System.out.println("Controller：调用添加用户业务逻辑");
+        addUserService.excuteAddUser();
+    }
+}
+```
+
+
+
+
+
+#### 四、AOP（面向切面编程）
+
+##### 4.1 AOP概述
+
+* AOP(Aspect-Oriented Programming，`面向切面编程`)：
+  * 是一种新的方法论，是对传统 OOP(Object-Oriented Programming，面向对象编程)的补充。
+
+* AOP编程操作的主要对象是切面(aspect)，而切面`模块化横切关注点`。
+
+* 在应用AOP编程时，仍然需要定义公共功能，但可以明确的定义这个功能应用在哪里，以什么方式应用，并且不必修改受影响的类。这样一来横切关注点就被模块化到特殊的类里——这样的类我们通常称之为“切面”。 
+
+* AOP的好处： 
+  * ① 每个事物逻辑位于一个位置，代码不分散，便于维护和升级
+  * ② 业务模块更简洁，只包含核心业务代码
+  * ③ AOP图解
+
+<img src="./imgs/aspect.png"/>
+
+##### 4.2  AOP术语
+
+* 横切关注点
+  * 从每个方法中抽取出来的同一类非核心业务；
+* 切面（Aspect）
+  * 封装横切关注点信息的类，每个关注点体现为一个通知方法；
+* 通知（Advice）
+  * 切面必须要完成的各个具体工作
+* 目标（Target）
+  * 被通知的对象
+* 代理（Proxy）
+  * 向目标对象应用通知之后创建的代理对象
+* 连接点（Joinpoint）
+  * 横切关注点在程序代码中的具体体现，对应程序执行的某个特定位置。例如：类某个方法调用前、调用后、方法捕获到异常后等；
+  * 即：模块中的可执行方法与方法之间，可以理解为连接点；
+* 切入点（pointcut）
+  * 定位连接点的方式。每个类的方法中都包含多个连接点，所以连接点是类中客观存在的事物。如果把连接点看作数据库中的记录，那么切入点就是查询条件——AOP可以通过切入点定位到特定的连接点。切点通过org.springframework.aop.Pointcut 接口进行描述，它使用类和方法作为连接点的查询条件。
+
+
+
+**图解**
+
+<img src="./imgs/aspect_detail.png"/>
+
+##### 4.3 使用AOP框架AspectJ 
+
+> 功能与动态代理相似；
+
+导入jar包
+
+```
+com.springsource.net.sf.cglib-2.2.0.jar
+com.springsource.org.aopalliance-1.0.0.jar
+com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar 
+spring-aop-4.0.0.RELEASE.jar
+spring-aspects-4.0.0.RELEASE.jar
+```
+
+配置IOC容器
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--  批量导入注解标注的组件到IOC容器  -->
+    <context:component-scan base-package="com.use_aspectJ.annotation"/>
+    <!--
+        当Spring IOC容器侦测到bean配置文件中的<aop:aspectj-autoproxy>元素时，
+        会自动为	与AspectJ切面匹配的bean创建代理
+    -->
+    <aop:aspectj-autoproxy/>
+</beans>
+```
+
+添加Aspect注解，声明为切面类
+
+```java
+@Component
+@Aspect
+public class LoggingAspect {
+    /**
+     * 前置通知-在方法执行之前执行
+     * @Before(切入点表达式)
+     * 语法格式：
+     * execution([权限修饰符] [返回值类型] [简单类名/全类名] [方法名]([参数列表]))
+     */
+    @Before("execution(public int com.use_aspectJ.annotation.CalculatorImpl.add(int,int))")
+    public void beforeMethod(){
+        System.out.println("LoggingAspect：执行@Before前置通知...");
+    }
+
+    /**
+     * 后置通知-在方法执行之后执行
+     * execution(* com.use_aspectJ.annotation.*.*(..))
+     *    *  : 任意修饰符 任意返回值
+     *    *  : 任意类
+     *    *  : 任意方法
+     *    .. : 任意参数列表
+     *
+     * 连接点对象: JoinPoint
+     */
+    @After("execution(* com.use_aspectJ.annotation.*.*(..))")
+    public void afterMethod(){
+		System.out.println("LoggingAspect：执行@After后置通知...");
+    }
+}
+```
+
+**AspectJ支持5种类型的通知注解**
+
+* ① @Before：前置通知，在方法执行之前执行
+
+* ② @After：后置通知，在方法执行之后执行
+
+* ③ @AfterRunning：返回通知，在方法返回结果之后执行
+
+* ④ @AfterThrowing：异常通知，在方法抛出异常之后执行
+
+* ⑤ @Around：环绕通知，围绕着方法执行，可以理解是 前置 后置 返回  异常 通知的结合体，更像是动态代理的整个过程；
+
+
+
+添加 加减乘除 工具类（理解为被代理类）
+
+Calculator.java
+
+```java
+public interface Calculator {
+    int add(int i, int j);
+    int sub(int i, int j);
+    int div(int i, int j);
+    int mul(int i, int j);
+}
+```
+
+CalculatorImpl.java
+
+```java
+@Component
+public class CalculatorImpl implements Calculator {
+    @Override
+    public int add(int i, int j) {
+        System.out.println("run add...");
+        return i+j;
+    }
+    @Override
+    public int sub(int i, int j) {
+        System.out.println("run sub...");
+        return i-j;
+    }
+
+    @Override
+    public int div(int i, int j) {
+        System.out.println("run div...");
+        return i/j;
+    }
+
+    @Override
+    public int mul(int i, int j) {
+        System.out.println("run mul...");
+        return i*j;
+    }
+}
+```
+
+单元测试-AOP切面、通知的使用
+
+```java
+public class TestAspectJ {
+    @Test
+    public void testing(){
+        ApplicationContext context = CommonUtils.getApplicationContext("aspectJ-config.xml");
+		// 动态生成一个代理类对象
+        Calculator bean = context.getBean("calculatorImpl", Calculator.class);
+        System.out.println(bean.getClass().getName());
+        /**
+        *执行顺序：
+        *  调用前置通知
+        *  通过代理类调用add工具类方法
+        *  调用后置通知
+        */
+        int res = bean.add(1, 1);
+        System.out.println("result="+res);
+    }
+}
+```
+
+
+
+
+
+获取方法名 & 方法参数 & 返回值
+
+```java
+    /**
+     * @AfterReturning返回通知，在方法返回结果之后执行
+     * result=方法返回值
+     */
+    @AfterReturning(
+            value = "execution(public int com.use_aspectJ.annotation.CalculatorImpl.add(int,int))",
+            returning = "result"
+    )
+    public void afterReturningMethod(JoinPoint joinPoint,Object result){
+        // 获取方法名
+        String name = joinPoint.getSignature().getName();
+        // 获取方法参数
+        Object[] args = joinPoint.getArgs();
+        System.out.printf("3. @AfterReturning返回通知，在%s(%s)方法返回结果=%d\n",name,Arrays.toString(args),result);
+    }
+```
+
+
+
+环绕通知
+
+```java
+@Component
+@Aspect
+@Order(1)
+public class ValidationAspect {
+    /**
+     * 环绕通知
+     * 可以理解是 前置 后置 返回  异常 通知的结合体，更像是动态代理的整个过程
+     */
+    @Around("execution(* com.use_aspectJ.annotation.*.*(..))")
+    public Object aroundMethod(ProceedingJoinPoint pjp){
+        String name = pjp.getSignature().getName();
+        Object[] args = pjp.getArgs();
+        try {
+            // 前置
+            System.out.printf("ValidationAspect:执行%s(%s)前置通知...\n",name, Arrays.toString(args));
+            Object result = pjp.proceed();
+            // 返回
+            return result;
+        } catch (Throwable e) {
+            // 异常
+            e.printStackTrace();
+        }finally {
+            // 后置
+            System.out.printf("ValidationAspect:执行%s(%s)后置通知...\n",name, Arrays.toString(args));
+        }
+        return null;
+    }
+}
+```
+
+**通知优先级：@Order**
+
+> 默认=2147483647整型最大值（Integer.MAX_VALUE），值越小权重越高；
+
+基于XML配置AOP切面
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--  目标对象  -->
+    <bean id="calculatorImpl" class="com.use_aspectJ.annotationForXml.CalculatorImpl"></bean>
+    <!--  切面  -->
+    <bean id="loggingAspect" class="com.use_aspectJ.annotationForXml.LoggingAspect"></bean>
+
+    <!--  使用xml配置AOP 切面、通知  -->
+    <aop:config>
+        <!--    引用切面    -->
+        <aop:aspect ref="loggingAspect">
+            <!--      切入点表达式      -->
+            <aop:pointcut id="myPointcut" expression="execution(* com.use_aspectJ.annotationForXml.*.*(..))"/>
+
+            <!--      通知      -->
+            <aop:before method="beforeMethod" pointcut-ref="myPointcut"/>
+            <aop:after method="afterMethod" pointcut-ref="myPointcut"/>
+            <aop:after-returning method="afterReturningMethod" pointcut-ref="myPointcut" returning="result"/>
+            <aop:after-throwing method="afterThrowingMethod" pointcut-ref="myPointcut" throwing="err"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
+```
+
+
+
+
+
+#### 五、JDBCTemplate
+
+##### 5.1 概述
+
+> 为了使JDBC更加易于使用，Spring在JDBC API上定义了一个抽象层，以此建立一个JDBC存取框架。 
+>
+> ​    作为Spring JDBC框架的核心，JDBC模板的设计目的是为不同类型的JDBC操作提供模板方法，通过这种方式，可以在尽可能保留灵活性的情况下，将数据库存取的工作量降到最低。 
+
+
+
+需要导入的jar包
+
+```tex
+# IOC容器所需要的JAR包
+commons-logging-1.1.1.jar
+spring-beans-4.0.0.RELEASE.jar
+spring-context-4.0.0.RELEASE.jar
+spring-core-4.0.0.RELEASE.jar
+spring-expression-4.0.0.RELEASE.jar
+
+# JdbcTemplate所需要的JAR包
+spring-jdbc-4.0.0.RELEASE.jar
+spring-orm-4.0.0.RELEASE.jar
+spring-tx-4.0.0.RELEASE.jar
+
+# 数据库驱动和数据源
+c3p0-0.9.1.2.jar
+mysql-connector-java-5.1.7-bin.jar
+```
+
+
+
+##### 5.2 持久化操作
+
+* 增删改
+  * JdbcTemplate.update(String, Object...)
+* 批量增删改
+  * JdbcTemplate.batchUpdate(String, List<Object[]>)；
+  * Object[]封装了SQL语句每一次执行时所需要的参数；
+  * List集合封装了SQL语句多次执行时的所有参数；
+* 查询单行
+  * JdbcTemplate.queryForObject(String, RowMapper<Department>, Object...)；
+* 查询多行
+  * JdbcTemplate.query(String, RowMapper<Department>, Object...)；
+  * RowMapper对象依然可以使用BeanPropertyRowMapper；
+* 查询单一值
+  * JdbcTemplate.queryForObject(String, Class, Object...)；
+
+##### 5.3 使用具名参数
+
+> 具名参数具有更好的可维护性，在SQL语句中参数较多时可以考虑使用具名参数。
+>
+> 在Spring中可以通过NamedParameterJdbcTemplate类的对象使用带有具名参数的SQL语句。
+
+通过IOC容器创建NamedParameterJdbcTemplate对象
+
+```xml
+<!-- 配置可以使用具名参数的JDBCTemplate类对象 -->
+<bean 
+	id="namedTemplate"  class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	<!-- 没有无参构造器，必须传入数据源或JdbcTemplate对象 -->
+	<constructor-arg ref="dataSource"/>
+</bean>
+```
+
+#### 六、声明式事务管理
+
+##### 6.1 事务概述
+
+
+
+##### 6.2 事务的传播行为（Propagation）
+
+> 当事务方法被另一个事务方法调用时，必须指定事务应该如何传播。例如：方法可能继续在现有事务中运行，也可能开启一个新事务，并在自己的事务中运行。
+
+
+
+事务的传播行为可以由传播属性指定,Spring定义了7种类传播行为
+
+<img src="./imgs/propagation.png"/>
+
+
+
+##### 6.3 事务的隔离级别（Isolation）
+
+> Mysql 默认REPEATABLE READ
+>
+> Oracle默认READ COMMITTED
+>
+> 通常会使用`读已提交	READ COMMITTED`这个隔离级别；
+
+```tex
+1	读未提交	READ UNCOMMITTED
+特点：允许Transaction01读取Transaction02未提交的修改。
+
+2	读已提交	READ COMMITTED
+特点：要求Transaction01只能读取Transaction02已提交的修改。
+
+4	可重复读	REPEATABLE READ	
+特点：确保Transaction01可以多次从一个字段中读取到相同的值，即Transaction01执行期间禁止其它事务对这个字段进行更新。
+	
+8	串行化		SERIALIZABLE
+特点：确保Transaction01可以多次从一个表中读取到相同的行，在Transaction01执行期间，禁止其它事务对这个表进行添加、更新、删除操作。可以避免任何并发问题，但性能十分低下。
+```
+
+
+
+##### 6.4 触发事务回滚的异常
+
+
+
+##### 6.5 事务的超时和只读属性
+
+
+
+##### 6.6 基于XML配置的声明式事务
 
