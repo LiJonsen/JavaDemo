@@ -6,7 +6,24 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf32d2ec-aef1-4ca9-8315-3f1ecd625bbe" name="Default Changelist" comment="" />
+    <list default="true" id="bf32d2ec-aef1-4ca9-8315-3f1ecd625bbe" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileLoaderTest/fileLoaderTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fileLoaderTest/fileLoaderTest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/OperationBook.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/OperationBook.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/controller/BookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/controller/BookController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/dao/BookDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/dao/BookDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/dao/BookDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/dao/BookDaoImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/service/BookService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/service/BookService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/service/BookServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/out/production/SpringDemo/com/jdbc_template/service/BookServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/OperationBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/OperationBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/dao/BookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/dao/BookDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/dao/BookDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/service/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SpringDemo/src/com/jdbc_template/service/BookServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +39,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -30,6 +50,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectId" id="1coI9zqSKbhi9kvEKRQjDBvXYup" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -44,8 +65,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/bookstore/web/WEB-INF/lib/gson-2.2.4.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
@@ -369,13 +390,13 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.TestBook.testBooksPagination" />
-      <item itemvalue="Tomcat Server.HelloServlet" />
-      <item itemvalue="Tomcat Server.bookstore" />
-      <item itemvalue="Tomcat Server.fileLoaderTest" />
       <item itemvalue="JUnit.TestBook.test2" />
       <item itemvalue="JUnit.TestJson.testBean" />
       <item itemvalue="JUnit.TestJson.testList" />
       <item itemvalue="JUnit.TestJson.testMap" />
+      <item itemvalue="Tomcat Server.HelloServlet" />
+      <item itemvalue="Tomcat Server.bookstore" />
+      <item itemvalue="Tomcat Server.fileLoaderTest" />
     </list>
     <recent_temporary>
       <list>
@@ -431,6 +452,9 @@
       <workItem from="1591880279355" duration="5967000" />
       <workItem from="1591933367742" duration="19515000" />
       <workItem from="1592011035921" duration="17184000" />
+      <workItem from="1595928642978" duration="536000" />
+      <workItem from="1596003922212" duration="313000" />
+      <workItem from="1596110490461" duration="1320000" />
     </task>
     <servers />
   </component>
@@ -582,9 +606,10 @@
       <screen x="0" y="0" width="1728" height="1112" />
     </state>
     <state x="504" y="254" key="NewModule_or_Project.wizard/0.0.1728.1112@0.0.1728.1112" timestamp="1591273131401" />
-    <state x="410" y="89" width="1038" height="863" key="SettingsEditor" timestamp="1592040630303">
-      <screen x="0" y="0" width="1728" height="1112" />
+    <state x="217" y="16" width="916" height="708" key="SettingsEditor" timestamp="1595929103428">
+      <screen x="0" y="0" width="1366" height="738" />
     </state>
+    <state x="217" y="16" width="916" height="708" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1595929103428" />
     <state x="410" y="89" width="1038" height="863" key="SettingsEditor/0.0.1728.1112@0.0.1728.1112" timestamp="1592040630303" />
     <state x="545" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1592011036784">
       <screen x="0" y="0" width="1728" height="1112" />

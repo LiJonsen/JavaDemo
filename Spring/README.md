@@ -31,7 +31,7 @@ IOC 描述的是一种思想，而DI 是对IOC思想的具体实现.
 
 ##### 1.3 IOC容器在Spring中的实现
 
-* 1）在通过IOC容器读取Bean的实例之前，需要先将IOC容器本身实例化。
+* 在通过IOC容器读取Bean的实例之前，需要先将IOC容器本身实例化。
 
 * Spring提供了IOC容器的两种实现方式
   * ① BeanFactory：IOC容器的基本实现，是Spring内部的基础设施，是面向Spring本身的，不是提供给开发人员使用的。
@@ -58,13 +58,6 @@ IOC 描述的是一种思想，而DI 是对IOC思想的具体实现.
 ##### 1.7 结构图（从下往上看）
 
 <img src=".\imgs\spring.png"/>
-
-
-
-* Core Container：核心容器
-* AOP：面向切面编程
-* Data Access
-* Web
 
 
 
@@ -474,13 +467,11 @@ IOC 描述的是一种思想，而DI 是对IOC思想的具体实现.
     <bean class="bean_lifecycle.MyBeanPostProcessor"></bean>
 ```
 
-**声明周期示意图**
+**生命周期示意图**
 
 <img src=".\imgs\LifeCycle.png"/>
 
 ###### ⑤-引用外部属性文件
-
-
 
 **IOC容器配置c3p0连接池** 
 
@@ -959,6 +950,31 @@ c3p0-0.9.1.2.jar
 mysql-connector-java-5.1.7-bin.jar
 ```
 
+IOC容器配置
+
+```xml
+	<!-- 批量配置bean对象 -->
+	<context:component-scan base-package="com.jdbc_template"/>
+
+    <!--  引入属性配置文件  -->
+    <context:property-placeholder location="classpath:c3p0.properties"/>
+
+    <!--  配置c3p0连接池  -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${prop.driverClass}"></property>
+        <property name="jdbcUrl" value="${prop.bookUrl}"></property>
+        <property name="user" value="${prop.userName}"></property>
+        <property name="password" value="${prop.password}"></property>
+        <property name="minPoolSize" value="5"></property>
+        <property name="maxPoolSize" value="10"></property>
+    </bean>
+
+    <!--    配置Spring JDBCTemplate    -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+	</bean>
+```
+
 
 
 ##### 5.2 持久化操作
@@ -994,9 +1010,108 @@ mysql-connector-java-5.1.7-bin.jar
 </bean>
 ```
 
+
+
+>  具名参数传入
+>
+> ①通过Map对象传入
+>
+> ​		NamedParameterJdbcTemplate.update(String sql, Map<String,Object> map)
+>
+> ​		Map的键是参数名，值是参数值
+>
+> ② 通过SqlParameterSource对象传入
+
+具名参数在SQL语句中的格式
+
+```
+# 如：deptName作为Map的key值
+INSERT INTO depts (dept_name) VALUES (:deptName)
+```
+
+
+
+示例方法：
+
+```java
+/**
+* 使用具名参数插入book
+* @param book
+*/
+@Override
+public void namedTemplateForAddBook(Book book) {
+    System.out.println("使用具名参数方式：");
+    String sql = "INSERT INTO book(bid,book_name,price) values(:bid,:bookName,:price)";
+    // 核心点
+    BeanPropertySqlParameterSource bpsps = new BeanPropertySqlParameterSource(book);
+    int update = npjt.update(sql, bpsps);
+    System.out.printf("Repository ---> 更新了 %d 条数据... \n",update);
+}
+```
+
+
+
+JdbcTemplate案例代码地址： https://github.com/LiJonsen/JavaDemo/tree/master/Spring/SpringDemo/src/com/jdbc_template 
+
 #### 六、声明式事务管理
 
 ##### 6.1 事务概述
+
+> 为了保证数据的`完整性和一致性`，必须引入数据库事务的概念;
+>
+> 事务就是某个操作，会执行多个SQL语句对数据库表的多个数据同时操作，为了保证数据的一致性，这些操作`要么都成功，要么都失败`；
+>
+> 事务特点：原子性、一致性、隔离性、持久性；
+>
+> Spring配置方式：
+>
+> * 在IOC容器中开启事务注解
+> * 基于XML配置事务管理
+
+
+
+###### 声明事务管理器，开启事务注解模式
+
+```xml
+  <!--  配置Spring的事务管理器  -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--  开启事务注解  -->
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+
+
+    <!--  配置c3p0连接池  -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${prop.driverClass}"></property>
+        <property name="jdbcUrl" value="${prop.bookUrl}"></property>
+        <property name="user" value="${prop.userName}"></property>
+        <property name="password" value="${prop.password}"></property>
+        <property name="minPoolSize" value="5"></property>
+        <property name="maxPoolSize" value="10"></property>
+    </bean>
+
+	<!--  引入属性配置文件  -->
+    <context:property-placeholder location="classpath:c3p0.properties"/>
+
+```
+
+使用事务注解示例：
+
+> 以下方法一组操作，要么都成功，要么都失败；
+
+```java
+@Transactional
+public void validationBuyBook(String username,String bid) {
+        // 1. 查询书籍价格
+        int price = bookDao.findPriceByBid(bid);
+        // 2. 付款，更新用户balance
+        bookDao.updateBalance(username,price);
+        // 3. 减仓，更新库存
+        bookDao.updateStock(bid);
+}
+```
 
 
 
@@ -1010,6 +1125,12 @@ mysql-connector-java-5.1.7-bin.jar
 
 <img src="./imgs/propagation.png"/>
 
+使用示例：
+
+```
+@Transactional(propagation = Propagation.REQUIRES_NEW)
+```
+
 
 
 ##### 6.3 事务的隔离级别（Isolation）
@@ -1018,7 +1139,7 @@ mysql-connector-java-5.1.7-bin.jar
 >
 > Oracle默认READ COMMITTED
 >
-> 通常会使用`读已提交	READ COMMITTED`这个隔离级别；
+> 通常会使用`读已提交：READ COMMITTED`这个隔离级别；
 
 ```tex
 1	读未提交	READ UNCOMMITTED
@@ -1034,15 +1155,69 @@ mysql-connector-java-5.1.7-bin.jar
 特点：确保Transaction01可以多次从一个表中读取到相同的行，在Transaction01执行期间，禁止其它事务对这个表进行添加、更新、删除操作。可以避免任何并发问题，但性能十分低下。
 ```
 
+使用示例：
+
+> 设置隔离级别为：READ COMMITTED 读已提交；
+
+```tex
+@Transactional(isolation=Isolation.READ_COMMITTED)
+```
+
 
 
 ##### 6.4 触发事务回滚的异常
+
+> 默认情况：捕获到RuntimeException或Error时回滚，而捕获到编译时异常不回滚；
+>
+>  rollbackFor属性：指定遇到时必须进行回滚的异常类型，可以为多个;
+>
+>  noRollbackFor属性：指定遇到时不回滚的异常类型，可以为多个;
+
+
+
+使用示例：
+
+```
+@Transactional(
+	rollbackFor = (UserAccountException.class),
+    noRollbackFor = (BookStockException.class)
+)
+```
 
 
 
 ##### 6.5 事务的超时和只读属性
 
+> 由于事务可以在行和表上获得锁，因此长事务会占用资源，并对整体性能产生影响。
+>
+> 如果一个事务只读取数据但不做修改，数据库引擎可以对这个事务进行优化。
+>
+> 事务的优化：
+>
+> * 【timeout】超时事务属性：事务在强制回滚之前可以保持多久。这样可以防止长期运行的事务占用资源。
+>
+> * 【readOnly】只读事务属性: 表示这个事务只读取数据但不更新数据, 这样可以帮助数据库引擎优化事务。
+
+使用示例：
+
+```
+@Transactional(readOnly = true,timeout = 30)
+```
 
 
-##### 6.6 基于XML配置的声明式事务
 
+#### 七、总结
+
+* 使用XML配置IOC容器，在业务中通过`new ClassPathXmlApplicationContext(IOC容器XML)`加载配置好的bean，使用时通过`getBean()`方法获取实例对象即可，避免了大量的`new Xxx()`操作。（IOC容器可以理解为Bean工厂）；
+* AOP（面向切面编程）：
+  * AOP底层原理就是动态代理，核心使用`JDK（基于接口） & CGlib（基于继承）`实现；
+  * AOP切面：多个通知组成一个切面，连接点理解为被代理类的所有方法。多个通知围绕着代理类调用的核心方法的前后左右执行；
+* JdbcTemplate：
+  * Spring在JDBC API上定义了一个抽象层，以此建立一个JDBC存取框架；
+  * 特点：可以使用具名参数，可以动态的根据bean的属性名填入SQL语句中的预编译值；
+* 事务管理器：
+  * 通常使用事务注解来管理事务，保证数据的一致性和完整性，底层基于AOP实现；
+
+
+
+> 完整代码地址： https://github.com/LiJonsen/JavaDemo/tree/master/Spring/

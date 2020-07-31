@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="static/jquery.min-1.7.2.js"></script>
+
+</head>
+<body>
+<div>
+    测试REST-GET、POST、PUT、DELETE
+</div>
+<br/>
+<a href="order/1003">REST GET</a>
+<form action="order" method="POST">
+    <input type="submit" value="REST POST"/>
+</form>
+
+<form action="order/1002" method="POST">
+    <input type="hidden" value="PUT" name="_method"/>
+    <input type="submit" value="REST PUT"/>
+</form>
+<form action="order/1001" method="POST">
+    <input type="hidden" value="DELETE" name="_method"/>
+    <input type="submit" value="REST DELETE"/>
+</form>
+</body>
+</html>

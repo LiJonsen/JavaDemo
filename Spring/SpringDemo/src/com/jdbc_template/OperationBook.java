@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @ClassName OperationBook
- * @Description Details
+ * @Description 测试jdbcTemplate
  * @Author Josen
  * @Create 2020/7/28 11:18
  */
@@ -23,6 +23,7 @@ public class OperationBook {
     }
     @Test
     public void testAddBook() {
-        bookController.addBook(new Book("1003","三体2",99));
+        bookController.addBook(new Book("1004","幸福人生",39));
     }
+
 }

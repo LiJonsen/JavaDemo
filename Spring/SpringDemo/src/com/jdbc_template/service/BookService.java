@@ -10,4 +10,6 @@ import com.jdbc_template.beans.Book;
  */
 public interface BookService {
     void validationBook(Book book);
+
+    void validationBuyBook(String username,String bid);
 }
