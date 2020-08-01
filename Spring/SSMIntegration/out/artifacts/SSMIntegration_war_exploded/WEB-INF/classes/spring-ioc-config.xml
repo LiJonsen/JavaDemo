@@ -2,7 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--  SpringIOC容器配置  -->
     <context:component-scan base-package="com.josen">
         <!--    排除扫描@Controller组件    -->
@@ -14,4 +16,46 @@
         <property name="skill" value="Three-Point"></property>
     </bean>
 
+    <bean class="com.josen.beans.ResponseData" id="responseData">
+        <property name="code" value="200"></property>
+    </bean>
+
+
+    <!--  Spring整合Mybatis  -->
+    <!--  1. 配置数据源  -->
+    <!--  引入jdbc属性文件  -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <!--  2. 配置事务管理，并且开启事务注解  -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+
+    <!--  3. 在Spring IOC容器中整合Mybatis，通过bean创建SqlSession  -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--    数据源    -->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--    Mybatis的全局配置文件    -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!--    Mybatis的SQL映射文件    -->
+        <property name="mapperLocations" value="classpath:com/josen/mapper/*.xml"></property>
+    </bean>
+
+    <!--  4. Mapper接口代理实现类对象的创建 管理等
+		  MapperScannerConfigurer 会为指定包下的Mapper接口生成代理实现类对象并管理到IOC容器中.
+
+		  EmployeeMapper ==>代理实现类 == >对象 ：对象在IOC容器中的id: employeeMapper
+    -->
+    <!--  方式一：  -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.josen.mapper"></property>
+    </bean>
+    <!--  方式二(新版本)：  -->
+<!--    <mybatis-spring:scan base-package="com.josen.mapper"/>-->
 </beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <settings>
+        <!--    映射下划线到驼峰命名    -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+<!--        &lt;!&ndash; 开启延迟加载 &ndash;&gt;-->
+<!--        <setting name="lazyLoadingEnabled" value="true"/>-->
+<!--        &lt;!&ndash; 设置加载的数据是按需还是全部【实现分步查询设置为false】 &ndash;&gt;-->
+<!--        <setting name="aggressiveLazyLoading" value="false"/>-->
+    </settings>
+    <!-- 将bean下所有类添加别名，默认为类名   -->
+    <typeAliases>
+        <package name="com.josen.beans"/>
+    </typeAliases>
+</configuration>
