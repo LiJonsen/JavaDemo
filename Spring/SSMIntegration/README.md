@@ -183,3 +183,188 @@ Spring IOC容器获取：User{name='Curry', skill='Three-Point'}
 
 #### 二、Spring整合Mybatis
 
+导入jar包
+
+```
+log4j.jar
+mybatis-spring-1.3.0.jar
+mybatis-3.4.1.jar
+jackson-annotations-2.1.5.jar
+jackson-core-2.1.5.jar
+jackson-databind-2.1.5.jar
+```
+
+##### 2.1 添加配置文件
+
+ ###### mybatis-config.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!--    映射下划线到驼峰命名    -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!-- 将bean下所有类添加别名，默认为类名   -->
+    <typeAliases>
+        <package name="com.josen.beans"/>
+    </typeAliases>
+</configuration>
+
+```
+
+###### log4j.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+ 
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+ 
+ <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+   <param name="Encoding" value="UTF-8" />
+   <layout class="org.apache.log4j.PatternLayout">
+    <param name="ConversionPattern" value="%-5p %d{MM-dd HH:mm:ss,SSS} %m  (%F:%L) \n" />
+   </layout>
+ </appender>
+ <logger name="java.sql">
+   <level value="debug" />
+ </logger>
+ <logger name="org.apache.ibatis">
+   <level value="info" />
+ </logger>
+ <root>
+   <level value="debug" />
+   <appender-ref ref="STDOUT" />
+ </root>
+</log4j:configuration>
+```
+
+###### jdbc.properties
+
+> 5.x 导入com.mysql.jdbc.Driver
+
+```
+jdbc.driver=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/myemployees?serverTimezone=GMT%2B8
+jdbc.username=root
+jdbc.password=root
+```
+
+
+
+
+
+##### 2.2 在Spring IOC容器中整合Mybatis
+
+```xml
+  <!--  Spring整合Mybatis  -->
+    <!--  1. 配置数据源  -->
+    <!--  引入jdbc属性文件  -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <!--  2. 配置事务管理，并且开启事务注解  -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+
+    <!--  3. 在Spring IOC容器中整合Mybatis，通过bean创建SqlSession  -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--    数据源    -->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--    Mybatis的全局配置文件    -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!--    Mybatis的SQL映射文件    -->
+        <property name="mapperLocations" value="classpath:com/josen/mapper/*.xml"></property>
+    </bean>
+
+    <!--  4. Mapper接口代理实现类对象的创建 管理等
+		  MapperScannerConfigurer 会为指定包下的Mapper接口生成代理实现类对象并管理到IOC容器中.
+
+		  EmployeeMapper ==>代理实现类 == >对象 ：对象在IOC容器中的id: employeeMapper
+    -->
+    <!--  方式一：  -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.josen.mapper"></property>
+    </bean>
+    <!--  方式二(新版本)：  -->
+<!--    <mybatis-spring:scan base-package="com.josen.mapper"/>-->
+```
+
+
+
+
+
+##### 2.3 添加mapper接口&SQL映射文件
+
+创建com.josen.mapper包，存放mapper接口
+
+```java
+/**
+ * @ClassName EmployeeMapper
+ * @Description 员工接口Mapper
+ */
+public interface EmployeeMapper {
+    /**
+     * 查询员工列表
+     * @return
+     */
+    List<Employee> selectEmployeeList();
+}
+```
+
+
+
+在`resources`资源文件夹下，创建同样结构`com.josen.mapper`目录，用于存放SQL映射文件
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.EmployeeMapper">
+    <select id="selectEmployeeList" resultType="com.josen.beans.Employee">
+        select
+                employee_id empId,first_name name,email
+        from    employees
+        limit   0,10
+    </select>
+</mapper>
+```
+
+
+
+
+
+##### 2.4 测试执行SQL语句
+
+> 使用jackson的 `@RsponseBody`注解，支持JSON格式响应，在Handler提供一个测试接口，响应员工列表数据；
+
+```java
+/**
+ * @ClassName EmployeeHandler
+ * @Description 员工处理器
+ */
+@Controller
+public class EmployeeHandler {
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
+    @ResponseBody
+    @RequestMapping(value = "getEmployeeList",method = RequestMethod.GET)
+    public List<Employee> handlerEmployeeList(){
+        return employeeMapper.selectEmployeeList();
+    }
+}
+```
+

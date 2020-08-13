@@ -16,6 +16,12 @@
           let data = {message:'hello',data:{name:"josen",age:22}};
           sendReq('post','getClientJson',data)
         })
+        $("#getEmpList").on("click",()=>{
+          sendReq('get','employees')
+        })
+        $("#getLocationBtn").on("click",()=>{
+          sendReq('get','locations')
+        })
 
         function sendReq(method='get',url,data) {
           $.ajax({
@@ -46,6 +52,12 @@
     </li>
     <li>
       <button id="sendJsonBtn">Send Json To Spring</button>
+    </li>
+    <li>
+      <button id="getEmpList">Get Employee List</button>
+    </li>
+    <li>
+      <button id="getLocationBtn">Get Location List</button>
     </li>
   </ul>
   </body>

@@ -17,7 +17,6 @@
     </bean>
 
     <bean class="com.josen.beans.ResponseData" id="responseData">
-        <property name="code" value="200"></property>
     </bean>
 
 

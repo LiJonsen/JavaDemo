@@ -46,12 +46,12 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public Page<Book> queryBooks(int current, int pageSize) {
-
-        // 获取总记录数
-            int count = bookDao.queryBooksCount().intValue();
-            // 获取分页结果集
-            List<Book> books = bookDao.queryBooksByPagination( (current-1)*pageSize, pageSize);
-            // 总页码数=(总记录数+分页条数-1)/分页条数
+        //
+        //        // 获取总记录数
+        //            int count = bookDao.queryBooksCount().intValue();
+        //            // 获取分页结果集
+        //            List<Book> books = bookDao.queryBooksByPagination( (current-1)*pageSize, pageSize);
+        //            // 总页码数=(总记录数+分页条数-1)/分页条数
             int pageTotal = (count + pageSize-1)/pageSize;
             // 实例化Page分页JavaBean
             return new Page(books, current, pageTotal, count, pageSize);

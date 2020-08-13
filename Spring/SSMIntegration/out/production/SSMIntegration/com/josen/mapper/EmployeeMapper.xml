@@ -30,9 +30,10 @@
 <!--        <result column="department_id" property="deps.did"></result>-->
 <!--        <result column="department_name" property="deps.departmentName"></result>-->
 
-<!--&lt;!&ndash;        <association property="deps" javaType="com.josen.beans.Department">&ndash;&gt;-->
-<!--&lt;!&ndash;            <id column="did" property="did"></id>&ndash;&gt;-->
-<!--&lt;!&ndash;            <result column="department_name" property="departmentName"></result>&ndash;&gt;-->
-<!--&lt;!&ndash;        </association>&ndash;&gt;-->
+<!--        <association property="deps" javaType="com.josen.beans.Department">-->
+<!--            <id column="did" property="did"></id>-->
+<!--            <result column="department_name" property="departmentName"></result>-->
+<!--        </association>-->
+<!--        -->
 <!--    </resultMap>-->
 </mapper>

@@ -37,7 +37,6 @@ public class EmployeeHandler {
     @ResponseBody
     @RequestMapping("/employees")
     public ResponseData handlerEmployees(){
-        res.setMessage("response finish!");
 
         // 整合data数据
         Map data = new HashMap<>();
@@ -51,7 +50,6 @@ public class EmployeeHandler {
     @ResponseBody
     @RequestMapping("/locations")
     public ResponseData handlerLocations(){
-        res.setMessage("response finish!");
         // 整合data数据
         Map data = new HashMap<>();
         data.put("list",locationService.getLocationList());

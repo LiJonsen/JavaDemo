@@ -20,7 +20,7 @@ import java.io.IOException;
  * @Date 2020/6/12 14:30
  * @Version 1.0
  **/
-public class CartServlet extends BaseServlet{
+public class addShopToCartCartServlet extends BaseServlet{
     private BookService bookService = new BookServiceImpl();
     /**
      * 将商品添加到购物车

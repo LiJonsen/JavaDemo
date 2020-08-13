@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="shortcut icon" href="static/favicon.ico">
+    <link rel="stylesheet" href="static/css/jquery.toast.min.css">
+    <link rel="stylesheet" href="static/css/Montserrat.css">
+    <link rel="stylesheet" href="static/css/Signup.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="static/js/md5.js"></script>
+    <script src="static/js/toast-min.js"></script>
+    <script src="static/js/Signup.js"></script>
+</head>
+<body>
+    <div id="app">
+<!--        <h2></h2>-->
+        <div class="container" id="container">
+            <!--     注册       -->
+            <div class="form-container sign-up-container">
+                <form action="">
+                    <h1>Create Account</h1>
+                    <div class="social-container">
+                        <a href="javascript:;" class="social"><i class="fab "></i></a>
+                        <a href="javascript:;" class="social"><i class="fab "></i></a>
+                        <a href="javascript:;" class="social"><i class="fab "></i></a>
+                    </div>
+                    <span>or use your email for registration</span>
+                    <input type="text" v-model="username" placeholder="Enter Username..." />
+                    <input type="password" v-model="password" placeholder="Enter Password..." />
+                    <input type="email" v-model="email" placeholder="Enter Email..." />
+                    <button @click="submitSignUp">Sign Up</button>
+                </form>
+            </div>
+            <!--    登录       -->
+            <div class="form-container sign-in-container">
+                <form action="">
+                    <h1>Sign in</h1>
+                    <div class="social-container">
+                        <a href="javascript:;" class="social"><i class="fab "></i></a>
+                        <a href="javascript:;" class="social"><i class="fab "></i></a>
+                        <a href="javascript:;" class="social"><i class="fab "></i></a>
+                    </div>
+                    <span>or use your account</span>
+                    <input v-model="signIn.username" type="username" placeholder="Username" />
+                    <input v-model="signIn.password" type="password" placeholder="Password" />
+<!--                    <a href="#">Forgot your password?</a>-->
+                    </br>
+                    <button @click="submitSignIn">Sign In</button>
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To keep connected with us please login with your personal info</p>
+                        <button class="ghost" @click="changeType('signIn')">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start journey with us</p>
+                        <button class="ghost" @click="changeType('signUp')">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+<script src="static/js/Signup.js"></script>
+</html>

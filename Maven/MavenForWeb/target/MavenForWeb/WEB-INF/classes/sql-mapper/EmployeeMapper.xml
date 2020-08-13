@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.EmployeeMapper">
+    <select id="selectEmployeeList" resultType="com.josen.beans.Employee">
+        select
+                employee_id empId,first_name name,email
+        from    employees
+        limit   0,10
+    </select>
+</mapper>

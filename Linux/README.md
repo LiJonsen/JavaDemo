@@ -61,9 +61,26 @@ chmod 644 helloworld.sh
 sh helloworld.sh;
 ```
 
+##### 文件权限
+
+```
+-r ： 阅读
+-w ： 写入
+-x ： 执行
+
+示例：
+-rwx-wx-wx
+
+1.-rwx = 当前用户权限
+2.-wx = group组用户权限
+3.-wx = other其他用户权限
+
+-rwx-wx-wx = 744
+```
 
 
-#### Shell变量
+
+##### Shell变量
 
 ##### 系统变量
 
