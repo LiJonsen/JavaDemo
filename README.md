@@ -15,8 +15,7 @@
 ├── Mysql			
 ├── Redis			缓存服务
 ├── Nginx			反向代理
-├── PersonalCode	作者写的（水的一批的代码）
-├── Spring			SSM(Spring、Spring MVC、Mybatis)
-└── package.json
+├── PersonalCode	作者写的(水的一批的代码)
+└──  Spring			Spring+Spring MVC+Mybatis
 ```
 

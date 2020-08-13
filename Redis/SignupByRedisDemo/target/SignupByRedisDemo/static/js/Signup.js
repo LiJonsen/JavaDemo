@@ -20,11 +20,12 @@ var app = new Vue({
                 if (arr[1] == 200) {
                     this.signIn.username = arr[0];
                     this.showToast(arr[0]+"用户激活成功！");
-                    let msg = JSON.parse(user);
-                    if(msg.token && msg.user){
-                        window.location.href = "/home.html";
-                    }
                 }
+            }
+
+            let msg = JSON.parse(user);
+            if(msg.token && msg.user){
+                window.location.href = "/home.html";
             }
         } catch (err) {
         }
