@@ -6,19 +6,53 @@
     <link rel="shortcut icon" href="static/favicon.ico">
     <link rel="stylesheet" href="static/css/jquery.toast.min.css">
     <link rel="stylesheet" href="static/css/Montserrat.css">
-    <link rel="stylesheet" href="static/css/SignIn.css">
+    <link rel="stylesheet" href="static/css/home.css">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="static/js/md5.js"></script>
-    <script src="static/js/toast-min.js"></script>
+    <!-- import stylesheet -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/iview/3.5.4/styles/iview.css" rel="stylesheet">
+    <!-- import iView -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/iview/3.5.4/iview.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.5.0/echarts.min.js"></script>
 
 </head>
 <body>
     <div id="app">
-        <h2>Touchfish.cn-首页</h2>
-        <p>Hello {{username}} 欢迎登陆... </p>
-        <p>Token = {{token}}</p>
+<!--        <h2>Touchfish.cn-首页</h2>-->
+<!--        <p>Hello {{username}} 欢迎登陆... </p>-->
+<!--        <p>Token = {{token}}</p>-->
+        <header>
+            <div class="header-content">
+                <h2>Hello {{username}}!</h2>
+                <p class="welcome-row">欢迎登陆 TouchFish.cn</p>
+                <p class="btn-row">
+                    <i-button type="primary" @click="logout(true)">退出登录</i-button>
+                </p>
+            </div>
+            <div class="header-bg"></div>
+        </header>
+<!--        <img src="static/imgs/header-bg.png" class="header-bg"/>-->
+        <div class="content-container">
+            <h3>用户列表</h3>
+            <i-table :columns="columns" :data="datas"></i-table>
+            <div class="page-container">
+                <Page
+                        :total="page.total"
+                        :current="page.current"
+                        :page-size="page.pageSize"
+                        @on-change="changePage"
+                        @on-page-size-change="changePageSize"
+                        show-sizer></Page>
+            </div>
+            <div id="EchartsMap"></div>
+        </div>
     </div>
-    <script src="static/js/SignIn.js"></script>
+    <footer>
+        <ul class="footer-content">
+            <li>备案号：粤ICP备19156332号-1</li>
+            <li>Github：<a target="_blank" href="https://github.com/LiJonsen/JavaDemo/tree/master/Redis/SignupByRedisDemo">案例完整代码链接</a></li>
+        </ul>
+    </footer>
+    <script src="static/js/home.js"></script>
 </body>
 </html>

@@ -4,10 +4,11 @@ import cn.touchfish.beans.Codes;
 import cn.touchfish.beans.Result;
 import cn.touchfish.service.LoginService;
 import cn.touchfish.service.LoginServiceImpl;
+import cn.touchfish.service.WebSiteService;
+import cn.touchfish.service.WebSiteServiceImpl;
+import cn.touchfish.utils.CommonUtils;
 import cn.touchfish.utils.JedisUtils;
 import cn.touchfish.utils.ServletUtils;
-import com.alibaba.fastjson.JSON;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -26,6 +27,8 @@ import java.util.Map;
 @WebServlet("/active")
 public class Active extends BaseServlet{
     private LoginService loginService = new LoginServiceImpl();
+    private WebSiteService webSiteService = new WebSiteServiceImpl();
+
     /**
      * 注册激活Get接口
      * @param req
@@ -35,14 +38,13 @@ public class Active extends BaseServlet{
     protected void activationUser(HttpServletRequest req, HttpServletResponse resp, Map<String,Object> params) throws IOException, SQLException {
         String username = req.getParameter("username");
         String code = req.getParameter("code");
-        Jedis jedis = JedisUtils.getJedis();
-
         // 1. 从Redis获取code
-        String redis_code = jedis.get(username);
+        String activeName = CommonUtils.getRedisActiveName(username);
+        String redis_code = JedisUtils.getJedisCmd().ex_get(activeName);
         Result res = new Result(500, "激活失败!", "");
         // 该用户已激活
         if(loginService.checkUserIsActive(username)){
-            res.setCode(501);
+            res.setCode(500);
             res.setMsg(Codes.CODE_1007);
         }else if(code.equals(redis_code)){
              // 激活账号
@@ -52,13 +54,14 @@ public class Active extends BaseServlet{
                 // 3. 激活成功-清除redis缓存
                 res.setCode(200);
                 res.setMsg("激活成功！");
-                jedis.del(username);
+                JedisUtils.getJedisCmd().ex_del(activeName);
+                webSiteService.updateRedisWebSiteMsg("active_count",username);
             }
         }
         // 将响应数据放到Cookie
         String str = username+"&"+res.getCode();
         Cookie cookie = new Cookie("activeCode", str);
-        cookie.setMaxAge(600);
+        cookie.setMaxAge(60);
         cookie.setPath("/");
         resp.addCookie(cookie);
         resp.sendRedirect(ServletUtils.getHostUrl(req));

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mapper.HomeMapper">
+    <select id="getSiteMessage" resultType="map">
+        SELECT
+            SUM(login_count) as 'login_count',
+            SUM(access_count) as 'access_count',
+            COUNT(uid) as 'user_count',
+            (SELECT COUNT(uid) FROM t_user WHERE is_active=1) as 'active_count'
+        FROM t_user;
+    </select>
+
+    <update id="updateCountByUsers" parameterType="java.util.List">
+<!-- 注意：批量更新不能使用多个update -->
+<!--        <foreach collection="list" item="item" index="index" open="" close="">-->
+<!--            update t_user set access_count=${item.accessCount} where uid=${item.uid};-->
+<!--        </foreach>-->
+
+        update t_user
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="access_count =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.accessCount!=0">
+                        when username=#{item.username}
+                        then #{item.accessCount}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="login_count =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.loginCount!=0">
+                        when username=#{item.username}
+                        then #{item.loginCount}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where username in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item.username}
+        </foreach>
+    </update>
+</mapper>

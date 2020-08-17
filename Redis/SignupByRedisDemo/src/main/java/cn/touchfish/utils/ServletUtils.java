@@ -1,6 +1,10 @@
 package cn.touchfish.utils;
 
+import cn.touchfish.beans.Result;
+import com.alibaba.fastjson.JSON;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -11,8 +15,16 @@ import java.io.IOException;
  * @Create 2020/8/11 10:46
  */
 public final class ServletUtils {
+    public static void executeResponseJSON(HttpServletResponse resp, Result res) throws IOException {
+        String s = JSON.toJSONString(res);
+        resp.getWriter().print(s);
+    }
     public static String getHostUrl(HttpServletRequest req){
-        return req.getScheme()+"://"+ req.getServerName()+":"+req.getServerPort()+"/";
+        String url = req.getScheme()+"://"+ req.getServerName()+":"+req.getServerPort()+"/";
+        if(url.contains("localhost") || url.contains("127.0.0.1")){
+            return url;
+        }
+        return "https://www.touchfish.cn/";
     }
     /**
      * 获取POST请求参数
@@ -39,7 +51,6 @@ public final class ServletUtils {
                 }
             }
         }
-
         return data.toString();
     }
 }

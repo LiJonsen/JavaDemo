@@ -1,6 +1,9 @@
 #MyBatis/
 #Spring/
 #DecimalProxy/
+PersonalCode/
 #Redis/
 #Maven/
 .idea/
+*.iml
+target/

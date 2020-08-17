@@ -7,26 +7,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf32d2ec-aef1-4ca9-8315-3f1ecd625bbe" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookstore/src/com/bookstore/service/book/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookstore/src/com/bookstore/service/book/BookServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookstore/src/com/bookstore/web/servlet/controller/CartServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/bookstore/src/com/bookstore/web/servlet/controller/CartServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Linux/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Linux/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/conf/com/josen/mapper/EmployeeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/conf/com/josen/mapper/EmployeeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/conf/spring-ioc-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/conf/spring-ioc-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/com/josen/beans/ResponseData.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/com/josen/beans/ResponseData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/com/josen/handler/EmployeeHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/com/josen/handler/EmployeeHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/com/josen/mapper/EmployeeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/com/josen/mapper/EmployeeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/spring-ioc-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/WEB-INF/classes/spring-ioc-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/artifacts/SSMIntegration_war_exploded/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/com/josen/beans/ResponseData.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/com/josen/beans/ResponseData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/com/josen/handler/EmployeeHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/com/josen/handler/EmployeeHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/com/josen/mapper/EmployeeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/com/josen/mapper/EmployeeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/spring-ioc-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/out/production/SSMIntegration/spring-ioc-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/src/com/josen/beans/ResponseData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/src/com/josen/beans/ResponseData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/src/com/josen/handler/EmployeeHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/src/com/josen/handler/EmployeeHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Spring/SSMIntegration/web/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../Spring/SSMIntegration/web/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/BaseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/BaseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/MailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/MailUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/css/SignIn.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/js/SignIn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/js/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/js/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/dao/BaseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/dao/BaseDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/css/SignIn.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/js/SignIn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/js/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/js/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/BaseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/BaseDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +65,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Maven/MavenForWeb" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -463,6 +459,7 @@
       <workItem from="1596440810226" duration="2575000" />
       <workItem from="1597110288353" duration="4881000" />
       <workItem from="1597119279353" duration="3056000" />
+      <workItem from="1597318440673" duration="970000" />
     </task>
     <servers />
   </component>

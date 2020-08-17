@@ -7,11 +7,13 @@ var app = new Vue({
         signIn:{
             username:"",
             password:""
-        }
+        },
+        loadingStatus:false
+
     },
     created: function () {
         let activeRes = this.getCookie("activeCode");
-        let user = window.sessionStorage.getItem("userMsg");
+        let user = window.localStorage.getItem("userMsg");
 
         try {
             // 激活成功
@@ -70,7 +72,10 @@ var app = new Vue({
             if(!this.validateData(obj)){
                 return;
             }
+            this.loadingStatus = true;
             this.send_request('post', 'login', obj).then(res => {
+                this.loadingStatus = false;
+
                 if (res.code == 200) {
                     this.showToast("注册成功，请前往邮箱激活账号！");
                     this.changeType('signIn');
@@ -103,7 +108,6 @@ var app = new Vue({
                     },
                     error: err => {
                         console.log(err)
-                        this.showToast("注册失败", 'red');
                         reject(err);
                     }
                 })
@@ -120,13 +124,17 @@ var app = new Vue({
             if(!this.validateData(obj)){
                 return;
             }
+            this.loadingStatus = true;
+
             this.send_request('post','login',obj).then(res=>{
+                this.loadingStatus = false;
+
                 if(res.code == 200){
                     let msg = {
                         user:obj.username,
                         token:res.data
                     }
-                    window.sessionStorage.setItem("userMsg",JSON.stringify(msg));
+                    window.localStorage.setItem("userMsg",JSON.stringify(msg));
                     window.location.href = "/home.html";
                 }else{
                     this.showToast("账号或密码错误！", 'red');

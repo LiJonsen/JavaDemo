@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mapper.UserMapper">
+    <select id="queryUserList" resultType="cn.touchfish.beans.HomeUser">
+        select
+            uid,username,email,is_active,login_count,access_count
+        from
+            t_user
+        <if test="current!=null">
+            <trim prefix="limit ">
+                #{current},
+                <choose>
+                    <when test="pageSize!=null and pageSize!=0">#{pageSize}</when>
+                    <otherwise>10</otherwise>
+                </choose>
+            </trim>
+        </if>
+        ;
+    </select>
+
+    <select id="queryUserForCount" resultType="cn.touchfish.beans.CountForUser">
+        select username,is_active,login_count from t_user;
+    </select>
+
+    <select id="queryUser"
+            parameterType="cn.touchfish.beans.User"
+            resultType="cn.touchfish.beans.User">
+        select uid,username,password,email from t_user
+        <where>
+            <if test="uid!=0">
+                and uid=#{uid}
+            </if>
+            <if test="username!=null">
+                and username=#{username}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertOneUser">
+        insert into t_user(username,password,email) values(#{username},#{password},#{email});
+    </insert>
+
+    <update id="activeUser" parameterType="string">
+        update t_user set is_active=1 where username=#{username};
+    </update>
+</mapper>

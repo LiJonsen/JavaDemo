@@ -1,5 +1,5 @@
 package cn.touchfish.service;
-import cn.touchfish.beans.SignUpAccount;
+import cn.touchfish.beans.User;
 
 import java.sql.SQLException;
 
@@ -12,17 +12,17 @@ import java.sql.SQLException;
 public interface LoginService {
     /**
      * 校验注册用户信息
-     * @param account
+     * @param user
      * @return
      */
-    String validateSignUpInfo(SignUpAccount account) throws SQLException;
+    String validateSignUpInfo(User user) throws SQLException;
 
     /**
      * 激活账号
-     * @param account
+     * @param username
      * @return
      */
-    String activeAccount(String account) throws SQLException;
+    String activeAccount(String username) throws SQLException;
 
     /**
      * 校验用户名是否已存在

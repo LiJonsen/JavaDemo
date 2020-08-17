@@ -4,6 +4,7 @@ import cn.touchfish.utils.JdbcUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -54,15 +55,23 @@ public abstract class BaseDao<T> {
     /**
      * 查询多条记录
      * @param sql
-     * @param params
      * @return
      * @throws SQLException
      */
-//    public List<T> queryList(String sql,Object ...params) throws SQLException {
-//        BeanListHandler<T> listHandler = new BeanListHandler<>(clazz);
-//        List<T> list = runner.query(JdbcUtils.getConn(), sql, listHandler, params);
-//        return list;
-//    }
+    public List<T> queryList(String sql) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = JdbcUtils.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            BeanListHandler<T> listHandler = new BeanListHandler<>(clazz);
+            List<T> list = runner.query(conn, sql, listHandler);
+            JdbcUtils.closeConn(conn);
+            return list;
+        }
+
+    }
 
     /**
      * 查询单条记录
@@ -83,7 +92,26 @@ public abstract class BaseDao<T> {
             JdbcUtils.closeConn(conn);
             return bean;
         }
-
     }
+
+    /**
+     * 执行函数查询-如：Count(*)
+     * Tip：用于批量执行查询统计数据
+     */
+    public <E> E scalarQuery(String sql,Object ...params) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = JdbcUtils.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ScalarHandler<E> handler = new ScalarHandler<>();
+            E query = runner.query(conn, sql, handler, params);
+            JdbcUtils.closeConn(conn);
+            return query;
+        }
+    }
+
+
 
 }

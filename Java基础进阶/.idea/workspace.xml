@@ -2,8 +2,66 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="442848bd-f246-407b-bc93-f70fd52eb20d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaWeb/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaWeb/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/beans/SignUpAccount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/controller/Active.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/controller/Active.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/controller/BaseServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/controller/BaseServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/controller/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/controller/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/BaseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/BaseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/LoginDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/LoginDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/LoginDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/dao/LoginDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/junit/TestJdbc.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/junit/TestMailUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/service/LoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/service/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/service/LoginServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/JdbcUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/JdbcUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/JedisUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/MailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/MailUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/ServletUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/java/cn/touchfish/utils/ServletUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/resources/jdbc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/resources/jdbc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/css/SignIn.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/js/SignIn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/js/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/src/main/webapp/static/js/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/controller/Active.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/controller/Active.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/controller/BaseServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/controller/BaseServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/controller/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/controller/Login.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/dao/BaseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/dao/BaseDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/junit/TestJdbc.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/junit/TestMailUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/JdbcUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/JdbcUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/JedisUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/JedisUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/MailUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/ServletUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/classes/cn/touchfish/utils/ServletUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/css/SignIn.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/js/SignIn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/js/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/SignupByRedisDemo/static/js/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/beans/Codes.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/beans/Codes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/beans/Result.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/beans/Result.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/beans/SignUpAccount.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/controller/Active.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/controller/Active.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/controller/BaseServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/controller/BaseServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/controller/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/controller/Login.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/BaseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/BaseDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/LoginDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/LoginDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/LoginDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/dao/LoginDaoImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/junit/TestJdbc.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/junit/TestMailUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/service/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/service/LoginService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/service/LoginServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/service/LoginServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/JdbcUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/JdbcUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/JedisUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/JedisUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/MailUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/ServletUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/cn/touchfish/utils/ServletUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/jdbc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Redis/SignupByRedisDemo/target/classes/jdbc.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +82,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Redis/SignupByRedisDemo" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -40,6 +98,8 @@
       <workItem from="1592485144823" duration="823000" />
       <workItem from="1594351259990" duration="2066000" />
       <workItem from="1594368508522" duration="1253000" />
+      <workItem from="1597411962558" duration="660000" />
+      <workItem from="1597418249141" duration="132000" />
     </task>
     <servers />
   </component>
@@ -47,10 +107,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="510" y="206" key="FileChooserDialogImpl" timestamp="1594369762317">
+    <state x="510" y="206" key="FileChooserDialogImpl" timestamp="1597418380465">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="510" y="206" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1594369762317" />
+    <state x="510" y="206" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1597418380464" />
     <state x="645" y="311" key="FileChooserDialogImpl/0.0.1728.1112@0.0.1728.1112" timestamp="1592485966298" />
   </component>
 </project>

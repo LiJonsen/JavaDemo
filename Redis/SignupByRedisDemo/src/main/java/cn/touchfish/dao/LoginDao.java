@@ -1,6 +1,6 @@
 package cn.touchfish.dao;
 
-import cn.touchfish.beans.SignUpAccount;
+import cn.touchfish.beans.User;
 
 import java.sql.SQLException;
 
@@ -16,14 +16,14 @@ public interface LoginDao {
      * @param account
      * @return
      */
-    int insertOneUser(SignUpAccount account) throws SQLException;
+    int insertOneUser(User account) throws SQLException;
 
     /**
      * 查询一条用户记录
      * @param account
      * @return
      */
-    SignUpAccount queryOneUser(String account) throws SQLException;
+    User queryOneUser(String account) throws SQLException;
 
     /**
      * 更新用户激活状态

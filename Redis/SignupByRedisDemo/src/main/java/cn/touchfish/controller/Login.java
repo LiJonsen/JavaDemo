@@ -1,14 +1,16 @@
 package cn.touchfish.controller;
 import cn.touchfish.beans.Codes;
 import cn.touchfish.beans.Result;
-import cn.touchfish.beans.SignUpAccount;
+import cn.touchfish.beans.SiteMessage;
+import cn.touchfish.beans.User;
 import cn.touchfish.service.LoginService;
 import cn.touchfish.service.LoginServiceImpl;
+import cn.touchfish.service.WebSiteService;
+import cn.touchfish.service.WebSiteServiceImpl;
+import cn.touchfish.utils.CommonUtils;
 import cn.touchfish.utils.JedisUtils;
 import cn.touchfish.utils.MailUtils;
 import cn.touchfish.utils.ServletUtils;
-import com.alibaba.fastjson.JSON;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +30,7 @@ import java.util.UUID;
 @WebServlet("/login")
 public class Login extends BaseServlet {
     private LoginService loginService = new LoginServiceImpl();
+    private WebSiteService webSiteService = new WebSiteServiceImpl();
     /**
      * 注册接口
      * @param req
@@ -41,7 +44,7 @@ public class Login extends BaseServlet {
         String email = params.get("email");
 
         // 注册用户操作
-        SignUpAccount account = new SignUpAccount(username, password, email);
+        User account = new User(username, password, email);
         String status = "注册失败，请稍后重试！";
         Result res = new Result(500, status, "");
 
@@ -56,16 +59,15 @@ public class Login extends BaseServlet {
                 String url = ServletUtils.getHostUrl(req) + "active?username="+username+"&code="+code+"&action=activationUser";
                 MailUtils mailUtils = new MailUtils(email, url,username);
                 mailUtils.sendMail();
-                Jedis jedis = JedisUtils.getJedis();
                 // 1天缓存过期
-                jedis.setex(username,24*60*60,code);
+                String activeName = CommonUtils.getRedisActiveName(username);
+                JedisUtils.getJedisCmd().ex_setex(activeName,24*60*60,code);
+                webSiteService.updateRedisWebSiteMsg("user_count",username);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        String s = JSON.toJSONString(res);
-        resp.getWriter().print(s);
+        ServletUtils.executeResponseJSON(resp,res);
     }
 
     /**
@@ -85,19 +87,35 @@ public class Login extends BaseServlet {
             if(Codes.SUCCESS_CODE.equals(status)){
                 // 校验通过，生成Token(存储在redis)
                 String token = UUID.randomUUID().toString();
-                Jedis jedis = JedisUtils.getJedis();
-                jedis.setex(username+"_token",60*60*24,token);
+                String tokenKey = CommonUtils.getRedisTokenKey(username);
+                JedisUtils.getJedisCmd().ex_setex(tokenKey,24*60*60,token);
                 res.setData(token);
                 res.setMsg("登录成功！");
                 res.setCode(200);
+
+                // login_count计数+1
+                webSiteService.updateRedisWebSiteMsg("login_count",username);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        ServletUtils.executeResponseJSON(resp,res);
 
-        String s = JSON.toJSONString(res);
-        resp.getWriter().print(s);
     }
 
-
+    /**
+     * 退出登录接口
+     * @param req
+     * @param resp
+     * @param params
+     * @throws IOException
+     */
+    protected void logout(HttpServletRequest req, HttpServletResponse resp,Map<String,String> params) throws IOException{
+        String username = params.get("username");
+        // 清除Redis登录状态Token
+        String tokenKey = CommonUtils.getRedisTokenKey(username);
+        JedisUtils.getJedisCmd().ex_del(tokenKey);
+        Result res = new Result(200, "response success！", "");
+        ServletUtils.executeResponseJSON(resp,res);
+    }
 }

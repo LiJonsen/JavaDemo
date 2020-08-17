@@ -30,7 +30,12 @@
                     <input type="text" v-model="username" placeholder="Enter Username..." />
                     <input type="password" v-model="password" placeholder="Enter Password..." />
                     <input type="email" v-model="email" placeholder="Enter Email..." />
-                    <button @click="submitSignUp">Sign Up</button>
+                    <button v-show="loadingStatus" style="padding:8px 45px;height: 42px;width: 150px; ">
+                        <img style="width: 20px;" src="static/imgs/svg-loaders/oval.svg" />
+                    </button>
+                    <button @click="submitSignUp" v-show="!loadingStatus" style="height: 42px;">
+                        Sign Up
+                    </button>
                 </form>
             </div>
             <!--    登录       -->
@@ -47,7 +52,14 @@
                     <input v-model="signIn.password" type="password" placeholder="Password" />
 <!--                    <a href="#">Forgot your password?</a>-->
                     </br>
-                    <button @click="submitSignIn">Sign In</button>
+                    <!--         loading button           -->
+
+                    <button v-show="loadingStatus" style="padding:8px 45px;height: 42px;width: 150px; ">
+                        <img style="width: 20px;" src="static/imgs/svg-loaders/oval.svg" />
+                    </button>
+                    <button v-show="!loadingStatus" style="height: 42px;" @click="submitSignIn">
+                        <span>Sign In</span>
+                    </button>
                 </form>
             </div>
             <div class="overlay-container">

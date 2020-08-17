@@ -5,6 +5,9 @@ import com.sun.mail.util.MailSSLSocketFactory;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -53,9 +56,22 @@ public class MailUtils {
 
         //Properties properties = System.getProperties();// 获取系统属性
         Properties properties = new Properties();
-
+        properties.setProperty("mail.transport.protocol", "smtp");//协议
         properties.setProperty("mail.smtp.host", host);// 设置邮件服务器
         properties.setProperty("mail.smtp.auth", "true");// 打开认证
+        properties.setProperty("mail.smtp.port", "465"); // 使用465端口
+
+        //使用SSL，企业邮箱必需！
+        //开启安全协议，如果出错显示类不存在，就更新mail的jar包
+        MailSSLSocketFactory sf = null;
+        try {
+            sf = new MailSSLSocketFactory();
+            sf.setTrustAllHosts(true);
+        } catch (GeneralSecurityException e1) {
+            e1.printStackTrace();
+        }
+        properties.put("mail.smtp.ssl.enable", "true");// 打开SSL
+        properties.put("mail.smtp.ssl.socketFactory", sf);
 
         try {
             //QQ邮箱需要下面这段代码，163邮箱不需要
@@ -75,11 +91,11 @@ public class MailUtils {
             // 2.创建邮件对象
             Message message = new MimeMessage(session);
             // 2.1设置发件人
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress(from,"TouchFish"));
             // 2.2设置接收人
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             // 2.3设置邮件主题
-            message.setSubject("账号激活");
+            message.setSubject("<Testing> - 账号激活");
             // 2.4设置邮件内容
 
             String content = "<h2>Hello "+name+"!</h2></br></br>" +
