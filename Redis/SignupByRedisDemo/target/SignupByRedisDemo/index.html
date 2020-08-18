@@ -29,7 +29,7 @@
                     <span>or use your email for registration</span>
                     <input type="text" v-model="username" placeholder="Enter Username..." />
                     <input type="password" v-model="password" placeholder="Enter Password..." />
-                    <input type="email" v-model="email" placeholder="Enter Email..." />
+                    <input type="email" v-model="email" @keyup.enter.stop="submitSignUp" placeholder="Enter Email..." />
                     <button v-show="loadingStatus" style="padding:8px 45px;height: 42px;width: 150px; ">
                         <img style="width: 20px;" src="static/imgs/svg-loaders/oval.svg" />
                     </button>
@@ -49,7 +49,7 @@
                     </div>
                     <span>or use your account</span>
                     <input v-model="signIn.username" type="username" placeholder="Username" />
-                    <input v-model="signIn.password" type="password" placeholder="Password" />
+                    <input v-model="signIn.password" @keyup.enter.stop="submitSignIn" type="password" placeholder="Password" />
 <!--                    <a href="#">Forgot your password?</a>-->
                     </br>
                     <!--         loading button           -->

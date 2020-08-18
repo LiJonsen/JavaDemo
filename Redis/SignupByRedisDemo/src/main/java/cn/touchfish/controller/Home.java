@@ -4,12 +4,14 @@ import cn.touchfish.beans.HomeUser;
 import cn.touchfish.beans.Result;
 import cn.touchfish.beans.SiteMessage;
 import cn.touchfish.beans.User;
+import cn.touchfish.mapper.UserMapper;
 import cn.touchfish.service.UserService;
 import cn.touchfish.service.UserServiceImpl;
 import cn.touchfish.service.WebSiteService;
 import cn.touchfish.service.WebSiteServiceImpl;
 
 import cn.touchfish.utils.JedisUtils;
+import cn.touchfish.utils.MapperUtil;
 import cn.touchfish.utils.ServletUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,10 +47,14 @@ public class Home extends BaseServlet {
         String username = (String)params.get("username");
         int current = (Integer)params.get("current");
         int pageSize = (Integer)params.get("pageSize");
-        List<HomeUser> userList = userService.getUserListByPage(current,pageSize);
+        List<HomeUser> list = userService.getUserListByPage(current, pageSize);
+        long total = MapperUtil.getSqlMapper(UserMapper.class).queryUserTotal();
+        Map<String,Object> resMap = new HashMap<>();
+        resMap.put("list",list);
+        resMap.put("total",total);
         res.setCode(200);
         res.setMsg("response success!");
-        res.setData(userList);
+        res.setData(resMap);
         webSiteService.updateRedisWebSiteMsg("access_count", username);
 
         ServletUtils.executeResponseJSON(resp, res);

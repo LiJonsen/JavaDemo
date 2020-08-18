@@ -19,6 +19,9 @@
         </if>
         ;
     </select>
+    <select id="queryUserTotal" resultType="long">
+        SELECT COUNT(*) FROM t_user;
+    </select>
 
     <select id="queryUserForCount" resultType="cn.touchfish.beans.CountForUser">
         select username,is_active,login_count from t_user;

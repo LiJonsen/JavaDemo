@@ -22,4 +22,5 @@ public interface HomeMapper {
      * @return
      */
     int updateCountByUsers(List<HomeUser> homeUser);
+
 }

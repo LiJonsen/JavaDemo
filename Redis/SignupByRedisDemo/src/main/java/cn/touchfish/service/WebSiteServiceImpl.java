@@ -49,7 +49,9 @@ public class WebSiteServiceImpl implements WebSiteService {
         if (webSiteHash.size() > 0) {
             return webSiteHash;
         }
-        return MapperUtil.getSqlMapper(HomeMapper.class).getSiteMessage();
+        Map<String, Object> res = MapperUtil.getSqlMapper(HomeMapper.class).getSiteMessage();
+        MapperUtil.closeSqlSession();
+        return res;
     }
 
     /**
@@ -100,7 +102,7 @@ public class WebSiteServiceImpl implements WebSiteService {
         }
         // 判断Redis缓存同步数据到Mysql
         if ("login_count".equals(name) || "access_count".equals(name)) {
-            System.out.println("cacheUpdateCount="+cacheUpdateCount);
+//            System.out.println("cacheUpdateCount="+cacheUpdateCount);
             if (cacheUpdateCount >= 100) {
                 // 重置更新计数
                 cacheUpdateCount = 1;
@@ -133,6 +135,7 @@ public class WebSiteServiceImpl implements WebSiteService {
             // 2. 获取Mysql数据
             List<CountForUser> countForUsers = MapperUtil.getSqlMapper(UserMapper.class).queryUserForCount();
             List<HomeUser> users = new ArrayList<>();
+            MapperUtil.closeSqlSession();
 
             // 3. 对比数据，提取变更的数据
             for (CountForUser countForUser : countForUsers) {
@@ -147,12 +150,11 @@ public class WebSiteServiceImpl implements WebSiteService {
             // 4. 提交Sql
             if(users.size()>0){
                 int i = MapperUtil.getSqlMapper(HomeMapper.class).updateCountByUsers(users);
-                System.out.println("mysql update cache count="+i);
+//                System.out.println("mysql update cache count="+i);
                 // 批量提交更新
                 MapperUtil.commitTransaction();
                 MapperUtil.closeSqlSession();
             }
-
         };
 
         new Thread(runnable).start();

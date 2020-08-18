@@ -28,4 +28,5 @@ public interface UserMapper {
 
     List<CountForUser> queryUserForCount();
 
+    long queryUserTotal();
 }

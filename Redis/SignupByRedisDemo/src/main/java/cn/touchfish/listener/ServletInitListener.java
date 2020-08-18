@@ -65,7 +65,7 @@ public class ServletInitListener implements ServletContextListener {
             // 将Map集合中的Long转换成String
             msg.forEach((key,val)->str_msg.put(key,val.toString()));
             // 初始化网站统计缓存
-            System.out.println("str_msg="+str_msg);
+//            System.out.println("str_msg="+str_msg);
             JedisUtils.getJedisCmd().ex_hmset(WebSiteServiceImpl.WEB_SITE_KEY,str_msg);
         };
         // 执行线程
@@ -83,7 +83,7 @@ public class ServletInitListener implements ServletContextListener {
             @Override
             public void run() {
                 List<HomeUser> userList = MapperUtil.getSqlMapper(UserMapper.class).queryUserList();
-                System.out.println("userList="+userList);
+//                System.out.println("userList="+userList);
                 for (HomeUser user : userList) {
                     String username = user.getUsername();
                     String loginCount = ""+user.getLoginCount();

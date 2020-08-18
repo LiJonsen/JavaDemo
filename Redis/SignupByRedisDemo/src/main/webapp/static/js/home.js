@@ -101,7 +101,6 @@ var app = new Vue({
                     this.webSiteMsg[1].value=res.data.active_count;
                     this.webSiteMsg[2].value=res.data.login_count;
                     this.webSiteMsg[3].value=res.data.user_count;
-                    this.page.total = res.data.user_count;
                     this.option.series[0].data = this.webSiteMsg;
                     this.myChart.setOption(this.option);
                 }else if(res.code == 501){
@@ -121,7 +120,8 @@ var app = new Vue({
 
             this.send_request('post','home',obj).then(res=>{
                 if(res.code == 200 ){
-                    this.datas = res.data;
+                    this.datas = res.data.list;
+                    this.page.total = res.data.total;
                     if(Array.isArray(this.datas)){
                         this.datas.map(item=>{
                             item.isActive = item.isActive==1?'已激活':'未激活';

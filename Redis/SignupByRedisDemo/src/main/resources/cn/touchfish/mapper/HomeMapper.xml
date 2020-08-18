@@ -12,6 +12,8 @@
         FROM t_user;
     </select>
 
+
+
     <update id="updateCountByUsers" parameterType="java.util.List">
 <!-- 注意：批量更新不能使用多个update -->
 <!--        <foreach collection="list" item="item" index="index" open="" close="">-->
