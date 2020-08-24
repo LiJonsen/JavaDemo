@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.CatalogMapper">
+    <!--  根据course_id查询catalog  -->
+    <select id="queryCatalogByCid" resultType="cn.touchfish.mm.pojo.Catalog">
+        SELECT id,name FROM t_catalog WHERE course_id=#{id};
+    </select>
+</mapper>

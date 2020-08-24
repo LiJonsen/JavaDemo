@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.UserMapper">
+    <select id="queryOneUser" parameterType="cn.touchfish.mm.pojo.User" resultType="cn.touchfish.mm.pojo.User">
+        SELECT
+            id,username,password,state,email,source,create_date,remark
+        FROM t_user
+        WHERE username=#{username} AND password=#{password};
+    </select>
+</mapper>

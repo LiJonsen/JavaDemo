@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.MemberMapper">
+
+<!--  根据open_id查询微信用户信息  -->
+    <select id="queryWxMemberByOpenId" resultType="cn.touchfish.mm.pojo.WxMember">
+        SELECT
+            nick_name,
+            avatar_url,
+            gender,
+            city,
+            province,
+            country,
+            language,
+            open_id,
+            create_time,
+            course_id,
+            id
+        FROM t_wx_member
+        WHERE open_id=#{openId};
+    </select>
+<!--  插入一条微信用户信息到t_wx_member  -->
+    <insert id="insertOneWeChatMember" parameterType="cn.touchfish.mm.pojo.WxMember">
+        INSERT INTO t_wx_member(
+            nick_name,
+            avatar_url,
+            gender,
+            city,
+            province,
+            country,
+            language,
+            open_id,
+            create_time
+        ) VALUES(
+            #{nickName},
+            #{avatarUrl},
+            #{gender},
+            #{city},
+            #{province},
+            #{country},
+            #{language},
+            #{openId},
+            #{createTime}
+        );
+    </insert>
+<!--  更新用户学科和城市id  -->
+    <update id="updateMemberCityAndCourse" parameterType="cn.touchfish.wxApi.pojo.WxLogin">
+        UPDATE t_wx_member SET course_id=#{subjectID},city_id=#{cityID} WHERE open_id=#{openId};
+    </update>
+</mapper>

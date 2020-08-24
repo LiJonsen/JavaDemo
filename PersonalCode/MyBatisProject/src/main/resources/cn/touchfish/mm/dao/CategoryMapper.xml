@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.CategoryMapper">
+<!--  查询面试题库列表【按技术点查询】  -->
+    <select id="queryCategoryItems" resultType="cn.touchfish.wxApi.pojo.CategoryItem">
+        SELECT
+	        c.id id,c.name title,COUNT(c.id) allCount,COUNT(wx.id) finishedCount
+        FROM t_catalog c
+        LEFT JOIN t_question q
+        ON c.id = q.catalog_id
+        LEFT JOIN (SELECT * FROM tr_member_question mq WHERE mq.member_id=#{memberId}) wx
+        ON wx.question_id = q.id
+        WHERE c.course_id = #{courseId}
+        GROUP BY c.id;
+    </select>
+    <!-- 查询面试题库列表【按企业查询】 -->
+    <select id="queryCategoryByCompany" resultType="cn.touchfish.wxApi.pojo.CategoryItem">
+        SELECT
+	        c.short_name title,c.id id,count(q.id) allCount,count(wx.id) finishedCount
+        FROM t_question q
+        JOIN t_company c
+        ON q.company_id=c.id
+        left join (SELECT * FROM tr_member_question mq WHERE mq.member_id=#{memberId}) wx
+        on wx.question_id=q.id
+        GROUP BY c.short_name
+        ;
+    </select>
+    <!-- 查询面试题库列表【按方向查询】 -->
+    <select id="queryCategoryByIndustry" resultType="cn.touchfish.wxApi.pojo.CategoryItem">
+        SELECT sum(d.v_count) allCount,d.title,d.industry_id,COUNT(wx.id) finishedCount
+        FROM v_dic d
+        LEFT JOIN (SELECT * FROM tr_member_question mq WHERE mq.member_id=#{memberId}) wx
+        ON wx.question_id=d.question_id
+        GROUP BY d.company_id;
+    </select>
+</mapper>

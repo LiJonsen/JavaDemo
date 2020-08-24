@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.QuestionMapper">
+    <!--  批量插入指定基础试题id的选项  -->
+    <insert id="insertBatchQuestionItem" parameterType="cn.touchfish.mm.pojo.QuestionItem">
+        INSERT INTO
+        t_question_item(
+            content,
+            img_url,
+            is_right,
+            question_id
+        ) VALUES
+        <foreach collection="items" item="item" separator=",">
+            (
+                #{item.content},
+                #{item.imgUrl},
+                #{item.isRight},
+                #{item.questionId}
+            )
+        </foreach>;
+    </insert>
+
+    <!--  插入一条基础题干记录  -->
+    <insert id="insertOneQuestion" parameterType="cn.touchfish.mm.pojo.Question">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT INTO
+        t_question(
+            subject,type,difficulty,analysis,analysis_video,remark,is_classic,status,review_status,create_date,user_id,company_id,catalog_id,course_id
+        ) VALUES(
+            #{subject},
+            #{type},
+            #{difficulty},
+            #{analysis},
+            #{analysisVideo},
+            #{remark},
+            #{isClassic},
+            #{status},
+            #{reviewStatus},
+            #{createDate},
+            #{userId},
+            #{companyId},
+            #{catalogId},
+            #{courseId}
+        );
+    </insert>
+
+    <!--  分页查询基础题库列表  -->
+    <select
+            id="queryQuestionListByPage"
+            parameterType="cn.touchfish.mm.entity.QueryPageBean"
+            resultType="cn.touchfish.mm.pojo.Question">
+        SELECT
+        q.id,(q.id+1000) number,q.create_date,q.difficulty,q.type,q.subject,q.status,
+        tr.status as 'reviewLog.status',
+        tr.create_date as 'reviewLog.createDate',
+        (SELECT username FROM t_user WHERE id=q.user_id) as 'reviewLog.reviewer',
+        (SELECT `name` FROM t_course WHERE id=q.course_id) courseName,
+        (SELECT username FROM t_user WHERE id=q.user_id) creator,
+        (SELECT COUNT(id) FROM tr_member_question WHERE question_id=q.id) usedQty
+        FROM t_question q
+        LEFT JOIN t_review_log tr
+        ON tr.question_id=q.id
+        <include refid="queryCondition">
+            <property name="queryParams" value="queryParams"/>
+        </include>
+        <!-- 审核状态 -->
+        <if test="queryParams!=null and queryParams.reviewStatus!=null">
+            AND tr.status = #{queryParams.reviewStatus}
+        </if>
+        ORDER BY tr.create_date desc
+        LIMIT #{offset},#{pageSize};
+    </select>
+
+    <!--  获取基础题库列表总记录数  -->
+    <select parameterType="cn.touchfish.mm.entity.QueryPageBean" id="getQuestionRecordTotal" resultType="long">
+        SELECT COUNT(id)
+        FROM t_question q
+        <include refid="queryCondition">
+            <property name="queryParams" value="queryParams"/>
+        </include>
+        ;
+    </select>
+
+    <!--  获取城市列表-父级  -->
+    <select id="getDictList" resultMap="dictListMap">
+        SELECT
+        id,pid,data_type,data_code,data_value,data_tag,data_desc,order_no
+        FROM t_dict WHERE pid IS NULL;
+    </select>
+    <!--  获取城市列表-子级  -->
+    <select id="querySubDict" resultType="cn.touchfish.mm.pojo.Dict">
+        SELECT
+        id,pid,data_type,data_code,data_value,data_tag,data_desc,order_no
+        FROM t_dict WHERE pid = #{id};
+    </select>
+    <!--  城市列表结果集映射  -->
+    <resultMap id="dictListMap" type="cn.touchfish.mm.pojo.Dict">
+        <collection
+                javaType="list"
+                property="subList"
+                column="id"
+                ofType="cn.touchfish.mm.pojo.Dict"
+                select="querySubDict"
+        ></collection>
+    </resultMap>
+
+    <!--  获取企业列表以及企业对应的方向  -->
+    <select id="getCompanyList" resultMap="queryCompanyMap">
+        SELECT
+            c.city_id,
+            c.id,
+            c.short_name,
+            ci.industry_id,
+            (SELECT name from t_industry where id=industry_id) industry_name
+        FROM
+            t_company c
+        LEFT JOIN
+            tr_company_industry ci
+        ON
+            c.id=ci.company_id;
+    </select>
+    <resultMap id="queryCompanyMap" type="cn.touchfish.mm.pojo.Company">
+        <id column="id" property="id"></id>
+        <result column="city_id" property="cityId"></result>
+        <result column="short_name" property="shortName"></result>
+        <collection
+                column="industry_id"
+                ofType="cn.touchfish.mm.pojo.Industry"
+                property="industryList">
+            <id column="industry_id" property="id"></id>
+            <result column="industry_name" property="name"></result>
+        </collection>
+    </resultMap>
+
+    <!--  加入精选功能  -->
+    <update id="updateClassic">
+        UPDATE t_question SET is_classic=#{isClassic} WHERE id=#{questionId};
+    </update>
+    <!--  精选试题审核  -->
+    <update id="updateReviewStatus" parameterType="cn.touchfish.mm.pojo.Question">
+        UPDATE t_question SET review_status=#{reviewStatus},status=#{status} WHERE id=#{id};
+    </update>
+    <update id="updateReviewLogStatusByQid" parameterType="cn.touchfish.mm.pojo.Question">
+        UPDATE t_review_log SET status=#{reviewStatus} WHERE question_id=#{id};
+    </update>
+    <!--  新增一条审核记录  -->
+    <insert id="insertOneReviewLogRecord">
+        INSERT INTO t_review_log(
+            status,
+            question_id,
+            user_id,
+            create_date
+        ) VALUES(
+            #{status},
+            #{questionId},
+            #{userId},
+            #{createDate}
+        );
+    </insert>
+    <!--  基础题库查询条件SQL模板  -->
+    <sql id="queryCondition">
+        <if test="queryParams!=null">
+            <trim prefix="WHERE" prefixOverrides="AND">
+                <!-- 学科id -->
+                <if test="queryParams.courseId!=null">
+                    AND q.course_id=#{queryParams.courseId}
+                </if>
+                <!-- 难度 -->
+                <if test="queryParams.difficulty!=null">
+                    AND q.difficulty=#{queryParams.difficulty}
+                </if>
+                <!-- 题目类型 -->
+                <if test="queryParams.type!=null">
+                    AND q.type=#{queryParams.type}
+                </if>
+                <!-- 是否精选 -->
+                <if test="queryParams.isClassic!=null">
+                    AND q.is_classic = #{queryParams.isClassic}
+                </if>
+
+                <!-- 题干关键字模糊查询 -->
+                <if test="queryParams.keyWord!=null">
+                    AND q.subject LIKE '%${queryParams.keyWord}%'
+                </if>
+            </trim>
+        </if>
+    </sql>
+</mapper>

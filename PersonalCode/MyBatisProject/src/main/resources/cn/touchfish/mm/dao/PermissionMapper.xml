@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.PermissionMapper">
+
+    <!-- 根据角色roleId查询权限信息 -->
+    <select id="getPermissionsByRid" resultType="cn.touchfish.mm.pojo.Permission">
+        SELECT
+             id,name,keyword,description
+        FROM t_permission
+        WHERE id in(SELECT permission_id FROM tr_role_permission WHERE role_id=#{rid});
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.TagMapper">
+    <!--  根据course_id查询tag  -->
+    <select id="queryTagByCid" resultType="cn.touchfish.mm.pojo.Tag">
+        SELECT id,name FROM t_tag WHERE course_id=#{id};
+    </select>
+
+    <insert id="insertBatchQuestionTag" parameterType="cn.touchfish.mm.pojo.Tag">
+        INSERT INTO
+            tr_question_tag(question_id,tag_id)
+        VALUES
+        <foreach collection="tags" separator="," item="tag">
+            (#{tag.questionId},#{tag.id})
+        </foreach>;
+    </insert>
+</mapper>

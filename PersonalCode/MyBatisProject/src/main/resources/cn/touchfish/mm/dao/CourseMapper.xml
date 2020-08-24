@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.touchfish.mm.dao.CourseMapper">
+    <!--  分页查询学科列表  -->
+    <select
+            id="queryCourseListByPage"
+            parameterType="cn.touchfish.mm.entity.QueryPageBean"
+            resultType="cn.touchfish.mm.pojo.Course">
+        SELECT
+            id,icon,create_date,is_show,user_id,order_no,name,
+            (SELECT username FROM t_user WHERE id=c.user_id) creator,
+            (SELECT COUNT(*) FROM t_question WHERE course_id=c.id) questionQty,
+            (SELECT COUNT(*) FROM t_tag WHERE course_id=c.id) tagQty,
+            (SELECT COUNT(*) FROM t_catalog WHERE course_id=c.id) catalogQty
+        FROM t_course c
+        <include refid="queryCondition">
+            <property name="queryParams" value="queryParams"/>
+        </include>
+        LIMIT #{offset},#{pageSize};
+    </select>
+
+    <!-- 查询学科总记录数 -->
+    <select
+            id="queryCourseListTotal"
+            parameterType="cn.touchfish.mm.entity.QueryPageBean"
+            resultType="long">
+        SELECT COUNT(id) FROM t_course c
+        <include refid="queryCondition">
+            <property name="queryParams" value="queryParams"/>
+        </include>
+        ;
+    </select>
+    <sql id="queryCondition">
+        <if test="queryParams!=null">
+            <where>
+                <if test="queryParams.name!=null and queryParams.name!=''">
+                    AND c.name LIKE #{queryParams.name}
+                </if>
+                <if test="queryParams.status==0 or queryParams.status==1">
+                    AND c.is_show = #{queryParams.status}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <!--  新增一条学科记录  -->
+    <insert id="insertOneCourse" parameterType="cn.touchfish.mm.pojo.Course">
+        INSERT INTO
+            t_course(name,create_date,is_show,user_id)
+        values
+            (#{name},#{createDate},#{isShow},#{userId});
+    </insert>
+
+    <!--  更新一条学科记录  -->
+    <update id="updateOneCourse" parameterType="cn.touchfish.mm.pojo.Course">
+        UPDATE t_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name!=null and name!=''">
+                 name=#{name},
+            </if>
+            <if test="isShow==0 or isShow==1">
+                 is_show=#{isShow},
+            </if>
+        </trim>
+        WHERE id=#{id};
+    </update>
+
+    <!--  删除一条学科记录  -->
+    <delete id="deleteOneCourse">
+        DELETE FROM t_course WHERE id=#{courseId};
+    </delete>
+
+    <!--  查询学科id & name列表  -->
+    <select id="querySimpleList" resultMap="courseListMap">
+        SELECT id,name FROM t_course WHERE is_show=#{is_show};
+    </select>
+
+    <!--  分步查询-学科下的目录和标签列表（懒加载）  -->
+    <resultMap id="courseListMap" type="cn.touchfish.mm.pojo.Course">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+            <collection
+                    column="id"
+                    javaType="list"
+                    ofType="cn.touchfish.mm.pojo.Catalog"
+                    select="cn.touchfish.mm.dao.CatalogMapper.queryCatalogByCid"
+                    property="catalogList"></collection>
+            <collection
+                    column="id"
+                    javaType="list"
+                    select="cn.touchfish.mm.dao.TagMapper.queryTagByCid"
+                    ofType="cn.touchfish.mm.pojo.Tag"
+                    property="tagList"></collection>
+    </resultMap>
+</mapper>
