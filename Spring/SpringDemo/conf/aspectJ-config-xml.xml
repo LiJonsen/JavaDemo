@@ -15,10 +15,14 @@
             <!--      切入点表达式      -->
             <aop:pointcut id="myPointcut" expression="execution(* com.use_aspectJ.annotationForXml.*.*(..))"/>
 
-            <!--      通知      -->
+            <!--      配置生命周期通知      -->
+            <!--      前置通知-在方法执行之前执行      -->
             <aop:before method="beforeMethod" pointcut-ref="myPointcut"/>
+            <!--      后置通知-在方法执行之后执行      -->
             <aop:after method="afterMethod" pointcut-ref="myPointcut"/>
+            <!--      返回通知，在方法返回结果之后执行     -->
             <aop:after-returning method="afterReturningMethod" pointcut-ref="myPointcut" returning="result"/>
+            <!--      异常通知: 在目标方法抛出异常后执行.      -->
             <aop:after-throwing method="afterThrowingMethod" pointcut-ref="myPointcut" throwing="err"/>
         </aop:aspect>
     </aop:config>

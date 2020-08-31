@@ -1,5 +1,12 @@
 > Maven官网下载地址： https://maven.apache.org/download.cgi 
 
+```
+├──		MavenForWeb		Maven Web项目
+└── 	MavenForSpring	SSM+maven模块拆分整合
+```
+
+
+
 #### 一、快速开始
 
 ##### 1.1  修改conf/setting.xml配置

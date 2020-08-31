@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.dao.EmployeeDao">
+    <select id="queryList" resultType="com.josen.pojo.Employee">
+        select
+            employee_id,
+            first_name,
+            last_name,
+            email,
+            phone_number,
+            job_id,
+            salary,
+            commission_pct,
+            manager_id,
+            department_id,
+            hiredate
+        from employees order by employee_id limit 0,10;
+
+    </select>
+    <update id="updateEmpById" parameterType="com.josen.pojo.Employee">
+        update employees set first_name=#{firstName} where employee_id=#{employeeId}
+    </update>
+</mapper>

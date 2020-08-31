@@ -27,7 +27,7 @@
         GROUP BY c.short_name
         ;
     </select>
-    <!-- 查询面试题库列表【按方向查询】 -->
+    <!-- 查询面试题库列表【按方向查询】 v_dic=视图虚拟表 -->
     <select id="queryCategoryByIndustry" resultType="cn.touchfish.wxApi.pojo.CategoryItem">
         SELECT sum(d.v_count) allCount,d.title,d.industry_id,COUNT(wx.id) finishedCount
         FROM v_dic d

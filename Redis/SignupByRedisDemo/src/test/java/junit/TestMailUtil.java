@@ -14,8 +14,8 @@ import java.util.UUID;
 public class TestMailUtil {
     @Test
     public void testing() {
-//        String str = UUID.randomUUID().toString();
-//        MailUtils mailUtils = new MailUtils("josen_lii@126.com", str,"josen");
-//        mailUtils.sendMail();
+        String str = UUID.randomUUID().toString();
+        MailUtils mailUtils = new MailUtils("josen_lii@126.com", str,"JJJ");
+        mailUtils.sendMail();
     }
 }
