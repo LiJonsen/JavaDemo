@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--  加载pojo到IOC容器中  -->
+    <context:component-scan base-package="com.josen.pojo"/>
+    <!--加载属性文件-->
+<!--    <context:property-placeholder location="classpath:jdbc.properties"/>-->
+
+    <!-- 监听zookeeper中config变化，无缝更新JDBC连接配置 -->
+    <bean id="myConfigUtil"
+          class="com.josen.utils.MyConfigUtil"
+    />
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--配置SqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:com/josen/mapper/*.xml"/>
+        <!--配置别名映射-->
+        <!--<property name="typeAliasesPackage" value="com.josen.pojo"/>-->
+        <!-- 分页插件pagehelper: 后续配置 -->
+    </bean>
+    <!--配置mapper文件扫描-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.josen.mapper"/>
+    </bean>
+</beans>

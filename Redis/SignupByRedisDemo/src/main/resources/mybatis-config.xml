@@ -8,8 +8,17 @@
         <!--    映射下划线到驼峰命名    -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
-    <environments default="development">
+    <environments default="produce">
         <environment id="development">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driverClass}"/>
+                <property name="url" value="${dev_url}"/>
+                <property name="username" value="${dev_username}"/>
+                <property name="password" value="${dev_password}"/>
+            </dataSource>
+        </environment>
+        <environment id="produce">
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
                 <property name="driver" value="${driverClass}"/>

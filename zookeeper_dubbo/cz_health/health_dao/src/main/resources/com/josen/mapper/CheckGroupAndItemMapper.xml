@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.CheckGroupAndItemMapper">
+    <select id="queryItemIdsByGroupId" resultType="java.lang.Integer">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id=#{id}
+    </select>
+    <delete id="deleteByItemId" parameterType="int">
+        DELETE FROM t_checkgroup_checkitem
+        <where>
+            <if test="!type">
+                checkitem_id=#{id}
+            </if>
+            <if test="type">
+                checkgroup_id=#{id}
+            </if>
+        </where>
+    </delete>
+
+    <select id="queryCountByItemId" resultType="int">
+        select count(*) from t_checkgroup_checkitem where checkitem_id=#{checkitemId}
+    </select>
+
+    <insert id="addRecord">
+        insert into t_checkgroup_checkitem(checkgroup_id,checkitem_id) values(#{groupId},#{itemId})
+    </insert>
+</mapper>

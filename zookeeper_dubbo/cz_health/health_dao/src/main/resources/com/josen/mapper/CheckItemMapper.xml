@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.CheckItemMapper">
+    <!--  查询所有检查项信息  -->
+    <select id="queryAllItem" resultType="com.josen.pojo.CheckItem">
+        select
+        i.id as id,
+        i.code as code,
+        i.name as name,
+        i.sex as sex,
+        i.age as age,
+        i.price as price,
+        i.type as type,
+        i.attention as attention,
+        i.remark as remark,
+        gi.checkgroup_id groupId
+        from t_checkitem i
+        LEFT JOIN t_checkgroup_checkitem gi
+        ON i.id=gi.checkitem_id
+        GROUP BY i.id
+    </select>
+
+    <select id="queryListByPage" resultType="com.josen.pojo.CheckItem">
+        select
+            id,
+            code,
+            name,
+            sex,
+            age,
+            price,
+            type,
+            attention,
+            remark
+        from t_checkitem
+        <where>
+            <if test="keyword!=null and keyword.length>0">
+                code like "%"#{keyword}"%" or name like "%"#{keyword}"%"
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="addCheckItem" parameterType="com.josen.pojo.CheckItem">
+        insert into t_checkitem(
+            code,
+            name,
+            sex,
+            age,
+            price,
+            type,
+            attention,
+            remark
+        ) values(
+            #{code},
+            #{name},
+            #{sex},
+            #{age},
+            #{price},
+            #{type},
+            #{attention},
+            #{remark}
+        )
+    </insert>
+
+
+    <update id="editCheckItem" parameterType="com.josen.pojo.CheckItem">
+        update t_checkitem set
+        code=#{code},
+        name=#{name},
+        sex=#{sex},
+        age=#{age},
+        price=#{price},
+        type=#{type},
+        attention=#{attention},
+        remark=#{remark}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteCheckItemById">
+        delete FROM t_checkitem WHERE id=#{id};
+    </delete>
+
+</mapper>

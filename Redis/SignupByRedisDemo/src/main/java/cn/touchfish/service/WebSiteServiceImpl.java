@@ -102,8 +102,8 @@ public class WebSiteServiceImpl implements WebSiteService {
         }
         // 判断Redis缓存同步数据到Mysql
         if ("login_count".equals(name) || "access_count".equals(name)) {
-//            System.out.println("cacheUpdateCount="+cacheUpdateCount);
-            if (cacheUpdateCount >= 100) {
+            System.out.println("cacheUpdateCount="+cacheUpdateCount);
+            if (cacheUpdateCount >= 10) {
                 // 重置更新计数
                 cacheUpdateCount = 1;
                 updateMysqlCountForUser();
@@ -146,7 +146,7 @@ public class WebSiteServiceImpl implements WebSiteService {
                 }
                 users.add(homeUser);
             }
-
+            System.out.println("users"+users);
             // 4. 提交Sql
             if(users.size()>0){
                 int i = MapperUtil.getSqlMapper(HomeMapper.class).updateCountByUsers(users);

@@ -107,6 +107,8 @@ SOME_VAL2=$(ls -l);
 * `unset 变量`可以撤销变量
 * `readonly 变量`设置只读
 
+
+
 ##### 设置环境变量
 
 > 作用：配置全局环境变量后，可以在任意的shell脚本代码中获取到。【`/etc/profile`文件可以配置全局环境变量】
@@ -130,6 +132,10 @@ SOME_VAL2=$(ls -l);
    ```
 
    
+   
+   ##### crond任务调度
+   
+   <img src="./imgs/crond.png"/>
 
 #### 函数
 

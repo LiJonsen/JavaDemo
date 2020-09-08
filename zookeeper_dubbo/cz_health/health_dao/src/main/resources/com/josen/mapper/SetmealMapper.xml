@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.SetmealMapper">
+    <delete id="deleteSetmeal">
+        delete from t_setmeal where id=#{id}
+    </delete>
+    <update id="updateSetmeal" parameterType="com.josen.pojo.Setmeal">
+        update t_setmeal set
+            name=#{name},
+            code=#{code},
+            helpCode=#{helpCode},
+            sex=#{sex},
+            age=#{age},
+            price=#{price},
+            remark=#{remark},
+            attention=#{attention},
+            img=#{img}
+        where id=#{id}
+    </update>
+    <insert id="addSetmeal" parameterType="com.josen.pojo.Setmeal">
+        <selectKey order="AFTER" keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_setmeal(
+            name,
+            code,
+            helpCode,
+            sex,
+            age,
+            price,
+            remark,
+            attention,
+            img
+        ) values(
+            #{name},
+            #{code},
+            #{helpCode},
+            #{sex},
+            #{age},
+            #{price},
+            #{remark},
+            #{attention},
+            #{img}
+        );
+    </insert>
+    <select id="queryListByPage" resultMap="queryListMap">
+        select
+            id,
+            name,
+            code,
+            helpCode,
+            sex,
+            age,
+            price,
+            remark,
+            attention,
+            img
+        from t_setmeal
+        <where>
+            <if test="keyword!=null and keyword.length>0">
+                code like "%"#{keyword}"%" or name like "%"#{keyword}"%" or helpCode like "%"#{keyword}"%"
+            </if>
+        </where>
+    </select>
+    <!--  根据groupId查询itemIds  -->
+    <resultMap id="queryListMap" type="com.josen.pojo.Setmeal">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="code" property="code"></result>
+        <result column="helpCode" property="helpCode"></result>
+        <result column="sex" property="sex"></result>
+        <result column="age" property="age"></result>
+        <result column="price" property="price"></result>
+        <result column="remark" property="remark"></result>
+        <result column="attention" property="attention"></result>
+        <result column="img" property="img"></result>
+        <collection
+                property="checkGroups"
+                select="com.josen.mapper.CheckGroupMapper.queryGroupBySetmealId"
+                column="id">
+        </collection>
+    </resultMap>
+</mapper>

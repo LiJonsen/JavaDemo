@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.CheckGroupMapper">
+    <select id="queryAllGroup" resultType="com.josen.pojo.CheckGroup">
+        select
+            id,
+            code,
+            name,
+            helpCode,
+            sex,
+            remark,
+            attention
+        from t_checkgroup
+    </select>
+    <select id="queryGroupBySetmealId" resultType="com.josen.pojo.CheckGroup">
+        select
+            id,
+            code,
+            name,
+            helpCode,
+            sex,
+            remark,
+            attention
+        from t_checkgroup
+        where id in(select checkgroup_id from t_setmeal_checkgroup WHERE setmeal_id=#{id})
+    </select>
+    <delete id="deleteGroupById">
+        delete from t_checkgroup where id=#{id}
+    </delete>
+    <update id="updateGroup" parameterType="com.josen.pojo.CheckGroup">
+        update t_checkgroup set
+        code=#{code},
+        name=#{name},
+        helpCode=#{helpCode},
+        sex=#{sex},
+        remark=#{remark},
+        attention=#{attention}
+        where id=#{id}
+    </update>
+    <select id="queryListByPage" resultMap="queryListMap">
+        select
+        id,
+        code,
+        name,
+        helpCode,
+        sex,
+        remark,
+        attention
+        from t_checkgroup
+        <where>
+            <if test="keyword!=null and keyword.length>0">
+                code like "%"#{keyword}"%" or name like "%"#{keyword}"%" or helpCode like "%"#{keyword}"%"
+            </if>
+        </where>
+    </select>
+    <!--  根据groupId查询itemIds  -->
+    <resultMap id="queryListMap" type="com.josen.pojo.CheckGroup">
+        <id column="id" property="id"></id>
+        <result column="code" property="code"></result>
+        <result column="name" property="name"></result>
+        <result column="helpCode" property="helpCode"></result>
+        <result column="sex" property="sex"></result>
+        <result column="remark" property="remark"></result>
+        <result column="attention" property="attention"></result>
+        <collection
+                property="checkItemIds"
+                select="com.josen.mapper.CheckGroupAndItemMapper.queryItemIdsByGroupId"
+                column="id">
+        </collection>
+    </resultMap>
+
+
+    <insert id="addGroup" parameterType="com.josen.pojo.CheckGroup">
+        <!-- 返回最新新增的id -->
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_checkgroup(
+        code,
+        name,
+        helpCode,
+        sex,
+        remark,
+        attention
+        ) values(
+        #{code},
+        #{name},
+        #{helpCode},
+        #{sex},
+        #{remark},
+        #{attention}
+        )
+    </insert>
+</mapper>
