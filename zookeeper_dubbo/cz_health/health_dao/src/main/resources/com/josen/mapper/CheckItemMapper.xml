@@ -3,6 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.josen.mapper.CheckItemMapper">
+    <select id="queryCheckItemsByGroupId" resultType="com.josen.pojo.CheckItem">
+        select
+            id,
+			code,
+			name,
+			sex,
+			age,
+			price,
+			type,
+			attention,
+			remark
+        from t_checkitem
+        where id in(select checkitem_id from t_checkgroup_checkitem WHERE checkgroup_id=#{id})
+    </select>
+
     <!--  查询所有检查项信息  -->
     <select id="queryAllItem" resultType="com.josen.pojo.CheckItem">
         select
@@ -24,15 +39,15 @@
 
     <select id="queryListByPage" resultType="com.josen.pojo.CheckItem">
         select
-            id,
-            code,
-            name,
-            sex,
-            age,
-            price,
-            type,
-            attention,
-            remark
+        id,
+        code,
+        name,
+        sex,
+        age,
+        price,
+        type,
+        attention,
+        remark
         from t_checkitem
         <where>
             <if test="keyword!=null and keyword.length>0">

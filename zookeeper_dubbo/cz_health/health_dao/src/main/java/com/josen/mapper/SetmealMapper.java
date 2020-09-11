@@ -37,4 +37,15 @@ public interface SetmealMapper {
      * @param id
      */
     void deleteSetmeal(@Param("id") Integer id);
+
+    /**
+     * 根据id查询套餐记录
+     */
+    Setmeal querySetmealById(@Param("id") Integer id);
+
+    /**
+     * 查询所有套餐列表（包含检查组、检查项信息）
+     * @return
+     */
+    List<Setmeal> querySetmeal(Setmeal setmeal);
 }

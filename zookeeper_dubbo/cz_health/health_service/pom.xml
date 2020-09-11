@@ -16,12 +16,21 @@
         <dependency>
             <groupId>com.josen</groupId>
             <artifactId>health_interface</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${health.version}</version>
         </dependency>
         <dependency>
             <groupId>com.josen</groupId>
             <artifactId>health_dao</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${health.version}</version>
+        </dependency>
+        <!--   java定时任务调度插件     -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
         </dependency>
     </dependencies>
     <build>

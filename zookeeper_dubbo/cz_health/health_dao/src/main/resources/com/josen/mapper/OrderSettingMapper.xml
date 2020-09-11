@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.OrderSettingMapper">
+    <update id="updateOrderSetting" parameterType="com.josen.pojo.OrderSetting">
+        update t_ordersetting
+        <set>
+            set number=#{number},
+            <if test="reservations!=0">
+                reservations=#{reservations},
+            </if>
+        </set>
+        <where>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+            <if test="orderDate != null">
+                and orderDate=#{orderDate}
+            </if>
+        </where>
+    </update>
+    <insert id="insertOrderSetting" parameterType="com.josen.pojo.OrderSetting">
+        insert into t_ordersetting(
+            orderDate,
+            number,
+            reservations
+        ) values(
+            #{orderDate},
+            #{number},
+            #{reservations}
+        )
+    </insert>
+    <select id="queryOrderSetting" resultType="com.josen.pojo.OrderSetting" parameterType="com.josen.pojo.OrderSetting">
+        select
+            id,
+            orderDate,
+            number,
+            reservations
+        from t_ordersetting
+        <where>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+            <if test="orderDate != null">
+                and orderDate=#{orderDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryOrderSettingByDate" resultType="com.josen.pojo.OrderSetting">
+        select
+            id,
+            orderDate,
+            number,
+            reservations
+        from t_ordersetting
+        where orderDate BETWEEN #{start} and #{end}
+    </select>
+
+
+    <update id="incrOrderSettingReservations">
+        update t_ordersetting set reservations=reservations+1 where orderDate=#{orderDate}
+    </update>
+</mapper>

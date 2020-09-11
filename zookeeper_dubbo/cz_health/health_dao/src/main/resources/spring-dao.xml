@@ -10,8 +10,8 @@
 <!--    <context:property-placeholder location="classpath:jdbc.properties"/>-->
 
     <!-- 监听zookeeper中config变化，无缝更新JDBC连接配置 -->
-    <bean id="myConfigUtil"
-          class="com.josen.utils.MyConfigUtil"
+    <bean id="listenerZkPoolConfig"
+          class="com.josen.utils.ListenerZkPoolConfig"
     />
 
     <!--配置数据源-->
@@ -33,5 +33,24 @@
     <!--配置mapper文件扫描-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.josen.mapper"/>
+    </bean>
+
+
+    <!--Jedis连接池的相关配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!--      最大连接数      -->
+        <property name="maxTotal" value="${myRedis.maxTotal}"/>
+        <!--      最大空闲数      -->
+        <property name="maxIdle" value="${myRedis.maxIdle}" />
+        <!--   获取Jedis实例时，检测Redis连接可用性（ping）     -->
+        <property name="testOnBorrow" value="true"/>
+        <!--    return一个Jedis实例给pool时，检查连接可用性    -->
+        <property name="testOnReturn" value="true"/>
+    </bean>
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig" />
+        <constructor-arg name="host" value="${myRedis.host}" />
+        <constructor-arg name="port" value="${myRedis.port}" type="int" />
+        <constructor-arg name="timeout" value="30000" type="int" />
     </bean>
 </beans>

@@ -1,11 +1,9 @@
 package com.josen.service;
-
 import com.josen.entity.PageResult;
 import com.josen.entity.QueryPageBean;
+import com.josen.entity.Result;
 import com.josen.pojo.Setmeal;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import java.util.List;
 
 /**
  * @InterfaceName SetmealService
@@ -39,4 +37,22 @@ public interface SetmealService {
      */
     void deleteSetmeal(Integer id);
 
+    /**
+     * 上传图片到七牛云
+     * @return
+     */
+    Result uploadImage(byte[] bytes,String name);
+
+    /**
+     * 查询所有套餐列表
+     * @return
+     */
+    List<Setmeal> queryAllSetmeal();
+
+    /**
+     * 查询套餐详情（包含检查组、检查项信息）
+     * @param setmeal
+     * @return
+     */
+    Setmeal queryDetails(Setmeal setmeal);
 }

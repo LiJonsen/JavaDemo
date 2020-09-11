@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josen.mapper.OrderMapper">
+    <select id="queryOrderByMidAndSid" resultType="com.josen.pojo.Order">
+        select * from t_order where setmeal_id=#{setmealId} and member_id=#{memberId}
+    </select>
+    <insert id="addOrder" parameterType="com.josen.pojo.Order">
+        <selectKey order="AFTER" keyProperty="id" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_order(
+            member_id,
+            orderDate,
+            orderType,
+            orderStatus,
+            setmeal_id
+        ) values(
+            #{memberId},
+            #{orderDate},
+            #{orderType},
+            #{orderStatus},
+            #{setmealId}
+        )
+    </insert>
+
+    <select id="getOrderDetailsById" resultMap="getOrderDetailsByIdMap">
+        select
+            id,
+            member_id,
+            orderDate,
+            orderType,
+            orderStatus,
+            setmeal_id
+        from t_order
+        where id=#{orderId}
+    </select>
+    <resultMap id="getOrderDetailsByIdMap" type="java.util.Map">
+        <id column="id" property="id"></id>
+        <result column="orderDate" property="orderDate"></result>
+        <result column="orderType" property="orderType"></result>
+        <result column="orderStatus" property="orderStatus"></result>
+        <association
+                property="member"
+                column="member_id"
+                select="com.josen.mapper.MemberMapper.queryMemberById"
+                javaType="com.josen.pojo.Member">
+        </association>
+        <association
+                property="setmeal"
+                column="setmeal_id"
+                select="com.josen.mapper.SetmealMapper.querySetmealById"
+                javaType="com.josen.pojo.Setmeal">
+        </association>
+    </resultMap>
+</mapper>

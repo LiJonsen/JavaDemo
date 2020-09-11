@@ -14,7 +14,7 @@
             attention
         from t_checkgroup
     </select>
-    <select id="queryGroupBySetmealId" resultType="com.josen.pojo.CheckGroup">
+    <select id="queryGroupBySetmealId" resultMap="queryGroupBySetmealIdMap">
         select
             id,
             code,
@@ -26,6 +26,15 @@
         from t_checkgroup
         where id in(select checkgroup_id from t_setmeal_checkgroup WHERE setmeal_id=#{id})
     </select>
+    <resultMap id="queryGroupBySetmealIdMap" type="com.josen.pojo.CheckGroup">
+        <id column="id" property="id"></id>
+        <collection
+                property="checkItems"
+                select="com.josen.mapper.CheckItemMapper.queryCheckItemsByGroupId"
+                column="id">
+        </collection>
+    </resultMap>
+
     <delete id="deleteGroupById">
         delete from t_checkgroup where id=#{id}
     </delete>

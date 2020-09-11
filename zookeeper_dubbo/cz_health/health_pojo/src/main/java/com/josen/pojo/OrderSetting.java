@@ -20,6 +20,16 @@ public class OrderSetting implements Serializable{
         this.number = number;
     }
 
+    @Override
+    public String toString() {
+        return "OrderSetting{" +
+                "id=" + id +
+                ", orderDate=" + orderDate +
+                ", number=" + number +
+                ", reservations=" + reservations +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

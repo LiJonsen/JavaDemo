@@ -6,7 +6,6 @@ import com.josen.entity.PageResult;
 import com.josen.entity.QueryPageBean;
 import com.josen.entity.Result;
 import com.josen.pojo.CheckGroup;
-import com.josen.pojo.CheckItem;
 import com.josen.service.CheckGroupService;
 import org.springframework.web.bind.annotation.*;
 

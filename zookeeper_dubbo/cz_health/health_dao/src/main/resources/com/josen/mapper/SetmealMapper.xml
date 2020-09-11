@@ -3,6 +3,45 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.josen.mapper.SetmealMapper">
+    <select id="querySetmeal" resultMap="querySetmealMap" parameterType="com.josen.pojo.Setmeal">
+        select
+            id,
+            name,
+            code,
+            helpCode,
+            sex,
+            age,
+            price,
+            remark,
+            attention,
+            img
+        from t_setmeal
+        <where>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </where>
+    </select>
+    <resultMap id="querySetmealMap" type="com.josen.pojo.Setmeal">
+        <id column="id" property="id"></id>
+        <collection property="checkGroups" column="id" select="com.josen.mapper.CheckGroupMapper.queryGroupBySetmealId">
+        </collection>
+    </resultMap>
+
+    <select id="querySetmealById" resultType="com.josen.pojo.Setmeal">
+        select
+            id,
+            name,
+            code,
+            helpCode,
+            sex,
+            age,
+            price,
+            remark,
+            attention,
+            img
+        from t_setmeal where id=#{id}
+    </select>
     <delete id="deleteSetmeal">
         delete from t_setmeal where id=#{id}
     </delete>

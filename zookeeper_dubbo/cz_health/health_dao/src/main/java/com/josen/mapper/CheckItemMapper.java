@@ -13,6 +13,10 @@ import java.util.List;
  */
 public interface CheckItemMapper {
     /**
+     * 根据groupId查询检查项列表
+     */
+    List<CheckItem> queryCheckItemsByGroupId(@Param("id") Integer id);
+    /**
      * 分页查询检查项列表
      * @return
      */

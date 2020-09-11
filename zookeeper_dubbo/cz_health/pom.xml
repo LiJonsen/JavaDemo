@@ -11,9 +11,10 @@
         <module>health_common</module>
         <module>health_pojo</module>
         <module>health_dao</module>
-        <module>health_interface</module>
         <module>health_service</module>
         <module>health_web</module>
+        <module>health_mobile_web</module>
+        <module>health_interface</module>
     </modules>
     <!-- 集中定义依赖版本号 -->
     <properties>
@@ -36,9 +37,22 @@
         <jedis.version>2.9.0</jedis.version>
         <quartz.version>2.2.1</quartz.version>
         <junit.version>4.12</junit.version>
+        <health.version>1.0-SNAPSHOT</health.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!--阿里云服务器短信平台-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <!--     html模板语法       -->
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
