@@ -15,6 +15,7 @@ import com.josen.service.OrderService;
 import com.josen.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -49,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Map validateOrder(SubmitOrder submitOrder) throws ParseException {
+
         Map res = new HashMap();
         // 1. 校验短信验证码
         Jedis resource = jedisPool.getResource();

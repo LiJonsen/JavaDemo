@@ -56,6 +56,7 @@ public class MyJob {
                 QiNiuUtil.deleteImg(item);
             }
         }
+
         System.out.println("db_list=>"+db_list);
         System.out.println("qn_list=>"+qn_list);
         System.out.println(" ======> cleanUselessImgJob 清理完成..."+ DateUtils.parseDateTime2String(new Date()));
